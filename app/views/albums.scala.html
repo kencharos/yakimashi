@@ -1,0 +1,10 @@
+@(albums: Seq[String])
+
+@main("albums") {
+    
+   @for(name <- albums) {
+   		<a href="/albums/@name">@name</a>
+   		<br>
+   }
+    
+}

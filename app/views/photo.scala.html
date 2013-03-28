@@ -1,0 +1,9 @@
+@(name:String, photos: Seq[model.Photo])
+
+@main(name) {
+    
+   @for(photo <- photos) {
+   		<img src="@routes.Assets.at(photo.url)" alt="@photo.name">
+   }
+    
+}
