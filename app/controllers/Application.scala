@@ -6,12 +6,7 @@ import model._
 import java.io.File;
 
 object Application extends Controller {
-  
-  def index = Action {
-    
-    Ok(views.html.index("Your new application is ready."))
-  }
-  
+
   def albums = Action {
   	val files = new File("public/album").listFiles();
 
@@ -19,10 +14,9 @@ object Application extends Controller {
     
   }
   
-  
   def photo(name:String) = Action {
   	var images = new File("public/album", name).listFiles().filter(_ isFile)
   	val photos = images.map(f => Photo("album/" + name + "/" + f.getName, f.getName))
-	Ok(views.html.photo(name, photos))
+	  Ok(views.html.photo(name, photos))
   }
 }
