@@ -1,10 +1,10 @@
 @(albums: Seq[String])
 
 @main("albums") {
-    
+   <p>アルバムを選択</p>
+   <ul>
    @for(name <- albums) {
-   		<a href="/albums/@name">@name</a>
-   		<br>
+   		<li><a href="/albums/@name">@name</a></li>
    }
-    
+   </ul>
 }
