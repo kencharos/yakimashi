@@ -2,13 +2,21 @@ package controllers
 
 import play.api._
 import play.api.mvc._
+import play.api.data._
+import play.api.data.Forms._
 import model._
 
 object LabelEdit extends Controller {
 
-  def info = Action {
+  val labelForm = Form(
+    "labels" -> seq (
+      mapping(
+        "id" -> text,
+        "name" -> nonEmptyText)(Label.apply)(Label.unapply)))
 
-  	Ok(views.html.label(Label.findAll.toList.sortWith(_.key < _.key)))
+  def info = Action {
+    
+    Ok(views.html.label(labelForm.fill(Label.findAll.toList)))
 
   }
 

@@ -1,9 +1,22 @@
-@(labels: Seq[model.Label])
+@(labelForm: Form[Seq[model.Label]])
+@import helper._
 
-@main("ƒ‰ƒxƒ‹•ÒW") {
-
-   @for(label <- labels) {
-   		<div>@label.key ;;;@label.name</div>
-   }
-
+@main("ãƒ©ãƒ™ãƒ«ç·¨é›†") {
+	@helper.form(action = routes.LabelEdit.update) {
+		<ul>
+		@repeat(labelForm("labels")) { label =>
+           <li>
+           @inputText(
+                label("id"),
+                '_label -> None
+            )
+           @inputText(
+                label("name"),
+                '_label -> None
+            )
+           </li>
+		}
+		<input type="submit" value="ç™»éŒ²" />
+		</ul>
+	}
 }

@@ -13,14 +13,11 @@ import mongoContext._
 case class Photo(url:String, name:String)
 
 
-case class Label(@Key("_id")id:ObjectId = new ObjectId, key:String, name:String);
+case class Label(@Key("_id")id:String, name:String);
 
-object Label extends ModelCompanion[Label, ObjectId] {
-  val dao = new SalatDAO[Label, ObjectId](collection = mongoCollection("label")) {}
+object Label extends ModelCompanion[Label, String] {
+  val dao = new SalatDAO[Label, String](collection = mongoCollection("label")) {}
 
-  def findOneByKey(key: String): Option[Label] 
-		  = dao.findOne(MongoDBObject("key" -> key))
-  
-  def updateName(label:Label) = dao.update(MongoDBObject("key" -> label.key),
+  def updateName(label:Label) = dao.update(MongoDBObject("_id" -> label.id),
       MongoDBObject("name" -> label.name), false, false)
 }
