@@ -1,9 +1,28 @@
 @(name:String, photos: Seq[model.Photo])
+@import helper._
 
 @main(name) {
-    
+		<script>
+			$(document).ready(function(){
+				$(".group").colorbox({rel:'group', transition:"none", width:"90%", height:"90%",slideshow:true,slideshowSpeed:3000});
+				$(".inline").colorbox({inline:true, width:"80%", height:"100%"});
+				$("#slide").click(function(){ $(".group:first").click() })
+			});
+		</script>
+		<div>@name <a id="slide" href="#">スライドショー</a></div>
    @for(photo <- photos) {
-   		<img src="@routes.Assets.at(photo.url)" alt="@photo.name" height="200px" width="200px">
+   		<a class="inline" href="#inline_content">
+   			<img src="@routes.Assets.at(photo.url)" alt="@photo.name"  height="200px" width="200px">
+   		</a>
+   		<span class="group" href="@routes.Assets.at(photo.url)" title="@photo.name"></span>
    }
-    
+   <!-- This contains the hidden content for inline calls -->
+	<div style='display:none'>
+		<div id='inline_content' style='padding:10px; background:#fff;'>
+		@helper.form(action = routes.Photo.update) {
+			TODO
+
+		}
+		</div>
+	</div>
 }
