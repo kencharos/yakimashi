@@ -17,7 +17,7 @@ case class Label(@Key("_id")id:String, name:String);
 
 object Label extends ModelCompanion[Label, String] {
   val dao = new SalatDAO[Label, String](collection = mongoCollection("label")) {}
-
+  def findSortedAll = findAll.toList.sortBy(_.id);
   def updateName(label:Label) = dao.update(MongoDBObject("_id" -> label.id),
       MongoDBObject("name" -> label.name), false, false)
 }

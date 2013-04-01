@@ -7,13 +7,10 @@
 		@repeat(labelForm("labels")) { label =>
            <li>
            @inputText(
-                label("id"),
-                '_label -> None
-            )
-           @inputText(
                 label("name"),
-                '_label -> None
+                '_label -> label("id").value
             )
+            <input type="hidden" name="@label("id").name" value="@label("id").value">
            </li>
 		}
 		<input type="submit" value="登録" />

@@ -3,7 +3,7 @@
 @main(name) {
     
    @for(photo <- photos) {
-   		<img src="@routes.Assets.at(photo.url)" alt="@photo.name">
+   		<img src="@routes.Assets.at(photo.url)" alt="@photo.name" height="200px" width="200px">
    }
     
 }
