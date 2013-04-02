@@ -1,4 +1,4 @@
-package model
+package models
 
 import play.api.Play.current
 
@@ -10,7 +10,15 @@ import se.radley.plugin.salat._
 import com.mongodb.casbah.commons.MongoDBObject
 import mongoContext._
 
-case class Photo(url:String, name:String)
+case class Photo(@Key("_id")id:ObjectId = new ObjectId, 
+	url:String, 
+	name:String, 
+	labelkeys:Seq[String] = Seq(), 
+	etc:Int = 0,
+	comment:String = "") {
+
+	def count = labelkeys.size + etc
+}
 
 
 case class Label(@Key("_id")id:String, name:String);

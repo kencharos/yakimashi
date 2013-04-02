@@ -4,7 +4,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-import model._
+import models._
 
 object LabelEdit extends Controller {
 
