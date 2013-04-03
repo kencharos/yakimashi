@@ -20,10 +20,16 @@ object Label extends ModelCompanion[Label, String] {
 
 object Photo extends ModelCompanion[Photo, ObjectId] {
   val dao = new SalatDAO[Photo, ObjectId](collection = mongoCollection("photo")) {}
+  
+  def findOneByname(album:String, name:String) = dao.findOne(
+      MongoDBObject("album" -> album, "name" -> name))
+  
+  def uniqueIndex() = mongoCollection("photo").ensureIndex(
+      MongoDBObject("album" -> 1, "name" -> 1), MongoDBObject("unique" -> true))
 }
 
 case class Photo(@Key("_id")id:ObjectId = new ObjectId,
-	url:String,
+	album:String,
 	name:String,
 	labelkeys:Seq[String] = Seq(),
 	etc:Int = 0,
@@ -31,6 +37,7 @@ case class Photo(@Key("_id")id:ObjectId = new ObjectId,
 	noDisp:Boolean = false) {
 
 	def count = labelkeys.size + etc
+	def url = "album/" + album + "/" + name
 }
 
 case class Label(@Key("_id")id:String, name:String);

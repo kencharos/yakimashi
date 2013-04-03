@@ -20,6 +20,9 @@ object Global extends GlobalSettings {
   	 		case Some(_) => Unit
   	 	}
   	 }
+  	 
+  	 // set uniqueIndex to Photo collection
+  	 Photo.uniqueIndex()
   }  
   
     

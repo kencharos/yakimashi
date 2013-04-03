@@ -14,9 +14,14 @@ object Application extends Controller {
     
   }
   
-  def photo(name:String) = Action {
-  	var images = new File("public/album", name).listFiles().filter(_ isFile)
-  	val photos = images.map(f => Photo(url = "album/" + name + "/" + f.getName, name = f.getName))
-	  Ok(views.html.photo(name, photos))
+  def photo(album:String) = Action {
+  	var images = new File("public/album", album).listFiles().filter(_ isFile)
+  	val photos = images.map(f =>
+  	    Photo.findOneByname(album, f.getName) match {
+  	      case None => Photo(album = album, name = f.getName)
+  	      case Some(p) => p
+  	    }
+  	  )
+	  Ok(views.html.photo(album, photos))
   }
 }
