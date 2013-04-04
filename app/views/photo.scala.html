@@ -1,6 +1,8 @@
 @(name:String, photos: Seq[models.Photo])
 @import helper._
 
+@noDisp(flg:Boolean) = {@if(flg){nodisp}else{ }}
+
 @main(name) {
 		
         <script src="@routes.Assets.at("javascripts/photo.js")" type="text/javascript"></script>
@@ -10,11 +12,11 @@
 			<input type="checkbox" id="nodisp"/><label for="nodisp">非表示の写真を表示</label>
 		</div>
    @for(photo <- photos) {
-   		<div class="tile" noDisp="@photo.noDisp">
+   		<div class="tile @noDisp(photo.noDisp)">
 	   		<a class="inline" href="#inline_content"><img src="@routes.Assets.at(photo.url)" 
 	   			alt="@photo.name">
-	   			<span>@photo.count</span>
 	   		</a>
+			<span class="count">@photo.count</span>
 	   		<span class="group hide" href="@routes.Assets.at(photo.url)" title="@photo.comment"></span>
    		</div>
    }
