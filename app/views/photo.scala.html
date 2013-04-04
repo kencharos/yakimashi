@@ -4,8 +4,8 @@
 @noDisp(flg:Boolean) = {@if(flg){nodisp}else{ }}
 
 @main(name) {
-		
-        <script src="@routes.Assets.at("javascripts/photo.js")" type="text/javascript"></script>
+
+		<script src="@routes.Assets.at("javascripts/photo.js")" type="text/javascript"></script>
 		<div>@name <a id="slide" href="#">スライドショー</a>
 			<input type="checkbox" id="zero"/><label for="zero">0枚の写真を隠す</label>
 			&nbsp;
@@ -13,7 +13,7 @@
 		</div>
    @for(photo <- photos) {
    		<div class="tile @noDisp(photo.noDisp)">
-	   		<a class="inline" href="#inline_content"><img src="@routes.Assets.at(photo.url)" 
+	   		<a class="inline" href="#inline_content"><img src="@routes.Assets.at(photo.url)"
 	   			alt="@photo.name">
 	   		</a>
 			<span class="count">@photo.count</span>
@@ -23,9 +23,24 @@
    <!-- This contains the hidden content for inline calls -->
 	<div style='display:none'>
 		<div id='inline_content' style='padding:10px; background:#fff;'>
+			<img id="img" src="" width="80%">
 		@helper.form(action = routes.PhotoEdit.update) {
-			TODO
-
+			<fieldset><legend>プリント対象</legend>
+			A<input type="checkbox">
+			A<input type="checkbox">
+			A<input type="checkbox">
+			A<input type="checkbox">
+			A<input type="checkbox">
+			A<input type="checkbox">
+			A<input type="checkbox">
+			A<input type="checkbox">
+			<br>その他の枚数<select><option>1</option></select>
+			</fieldset>
+			<fieldset><legend>コメント</legend>
+				<textarea cols="100" rows="4"></textarea>
+			</fieldset>
+			<input id="prev" type="button" value="登録して前へ">&nbsp;
+			<input id="next" type="button" value="登録して次へ">
 		}
 		</div>
 	</div>

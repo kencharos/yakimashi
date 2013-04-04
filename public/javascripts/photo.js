@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	$(".group").colorbox({rel:'group', transition:"none", width:"90%", height:"90%",slideshow:true,slideshowSpeed:4000});
-	$(".inline").colorbox({inline:true, width:"80%", height:"100%"});
+	$(".inline").colorbox({inline:true, width:"90%"});
+	$(".inline").click(function(){$("#img").attr({src:$("img",$(this)).attr("src")})})
 	$("#slide").click(function(){ $(".group:first").click() })
 	$("#zero").click(function(){
 		var on = this.checked;
@@ -28,4 +29,8 @@ $(document).ready(function(){
 		noDispProc(on)
 	})
 	noDispProc(false)
+
+
+
+
 });
