@@ -1,10 +1,9 @@
-@(name:String, photos: Seq[models.Photo])
+@(name:String, photos: Seq[models.Photo], label:Map[String, String])
 @import helper._
 
 @noDisp(flg:Boolean) = {@if(flg){nodisp}else{ }}
 
 @main(name) {
-
 		<script src="@routes.Assets.at("javascripts/photo.js")" type="text/javascript"></script>
 		<div>@name <a id="slide" href="#">スライドショー</a>
 			<input type="checkbox" id="zero"/><label for="zero">0枚の写真を隠す</label>
@@ -14,7 +13,7 @@
    @for(photo <- photos) {
    		<div class="tile @noDisp(photo.noDisp)">
 	   		<a class="inline" href="#inline_content"><img src="@routes.Assets.at(photo.url)"
-	   			alt="@photo.name">
+	   			alt="@photo.comment">
 	   		</a>
 			<span class="count">@photo.count</span>
 	   		<span class="group hide" href="@routes.Assets.at(photo.url)" title="@photo.comment"></span>
@@ -26,6 +25,7 @@
 			<img id="img" src="" width="80%">
 		@helper.form(action = routes.PhotoEdit.update) {
 			<fieldset><legend>プリント対象</legend>
+			非表示にする。<input type="checkbox" />
 			A<input type="checkbox">
 			A<input type="checkbox">
 			A<input type="checkbox">

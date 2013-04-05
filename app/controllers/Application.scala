@@ -17,11 +17,11 @@ object Application extends Controller {
   def photo(album:String) = Action {
   	var images = new File("public/album", album).listFiles().filter(_ isFile)
   	val photos = images.map(f =>
-  	    Photo.findOneByname(album, f.getName) match {
+  	    Photo.findOneByName(album, f.getName) match {
   	      case None => Photo(album = album, name = f.getName)
   	      case Some(p) => p
   	    }
   	  )
-	  Ok(views.html.photo(album, photos))
+	  Ok(views.html.photo(album, photos, Label.findSortedAll.map(l => l.id -> l.name).toMap))
   }
 }

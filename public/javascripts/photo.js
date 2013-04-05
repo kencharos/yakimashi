@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$(".group").colorbox({rel:'group', transition:"none", width:"90%", height:"90%",slideshow:true,slideshowSpeed:4000});
 	$(".inline").colorbox({inline:true, width:"90%"});
-	$(".inline").click(function(){$("#img").attr({src:$("img",$(this)).attr("src")})})
+	$(".inline").click(function(){initialModal($("img",$(this)).attr("src"))})
 	$("#slide").click(function(){ $(".group:first").click() })
 	$("#zero").click(function(){
 		var on = this.checked;
@@ -15,6 +15,15 @@ $(document).ready(function(){
 			}
 		})
 	})
+	$("#nodisp").click(function(){
+		var on = this.checked;
+		noDispProc(on)
+	})
+	var holder;
+	$("#next").click(function() {
+		updateModal();
+		// todo 
+	})
 	var noDispProc = function(disp){
 		$("div.nodisp").each(function(){
 			if (disp) {
@@ -24,13 +33,33 @@ $(document).ready(function(){
 			}
 		})
 	}
-	$("#nodisp").click(function(){
-		var on = this.checked;
-		noDispProc(on)
-	})
+	var initialModal = function(img) {
+		var path = img.split("/")
+		$.get("/photo",
+    		{"album": path[path.length - 2], "name":path[path.length - 1]}
+    	).then(
+			function(data){
+				$("#img").attr({src:img})
+
+				holder = data
+			}
+		);
+	}
+
+	var updateModal = function() {
+
+		// 
+		$.ajax({url:"/photo", 
+			type:"POST",
+			data:JSON.stringify(holder), 
+			dataType: "json",
+			contentType:"application/json; charset=utf-8"
+		}).then(
+			function(data) {
+				//todo update thumbnail.
+			}
+		)
+	}
+
 	noDispProc(false)
-
-
-
-
 });
