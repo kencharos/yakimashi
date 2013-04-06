@@ -11,9 +11,9 @@ object Application extends Controller {
   	val files = new File("public/album").listFiles();
 
   	Ok(views.html.albums(files.filter(_ isDirectory).map(_ getName)));
-    
+
   }
-  
+
   def photo(album:String) = Action {
   	var images = new File("public/album", album).listFiles().filter(_ isFile)
   	val photos = images.map(f =>
@@ -22,6 +22,6 @@ object Application extends Controller {
   	      case Some(p) => p
   	    }
   	  )
-	  Ok(views.html.photo(album, photos, Label.findSortedAll.map(l => l.id -> l.name).toMap))
+	  Ok(views.html.photo(album, photos, Label.findSortedAll))
   }
 }

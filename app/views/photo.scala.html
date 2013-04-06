@@ -1,4 +1,4 @@
-@(name:String, photos: Seq[models.Photo], label:Map[String, String])
+@(name:String, photos: Seq[models.Photo], label:Seq[models.Label])
 @import helper._
 
 @noDisp(flg:Boolean) = {@if(flg){nodisp}else{ }}
@@ -23,25 +23,24 @@
 	<div style='display:none'>
 		<div id='inline_content' style='padding:10px; background:#fff;'>
 			<img id="img" src="" width="80%">
-		@helper.form(action = routes.PhotoEdit.update) {
+			<input type="hidden" id="album">
+			<input type="hidden" id="name">
+			<input type="hidden" id="id" >
 			<fieldset><legend>プリント対象</legend>
-			非表示にする。<input type="checkbox" />
-			A<input type="checkbox">
-			A<input type="checkbox">
-			A<input type="checkbox">
-			A<input type="checkbox">
-			A<input type="checkbox">
-			A<input type="checkbox">
-			A<input type="checkbox">
-			A<input type="checkbox">
-			<br>その他の枚数<select><option>1</option></select>
+			<label for="noDisp">非表示にする</label><input id="noDisp" type="checkbox" /><br>
+			@for(l <- label) {
+				<label for="label_@l.id">@l.name</label><input type="checkbox" id="label_@l.id" name="@l.id">
+			}
+			<br>
+			その他の枚数<select id="etc">
+				@for(i <- 0 to 10) { <option value="@i">@i</option>}
+			</select>
 			</fieldset>
 			<fieldset><legend>コメント</legend>
-				<textarea cols="100" rows="4"></textarea>
+				<textarea cols="100" rows="4" id="comment"></textarea>
 			</fieldset>
 			<input id="prev" type="button" value="登録して前へ">&nbsp;
 			<input id="next" type="button" value="登録して次へ">
-		}
 		</div>
 	</div>
 }

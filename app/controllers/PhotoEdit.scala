@@ -11,7 +11,7 @@ import models._
 import com.mongodb.casbah.Imports._
 
 object PhotoEdit extends Controller {
-	
+
 	// Json - class transration
 	// To convert String - ObjectId, set custom constractor
 	implicit val photoFormat = (
@@ -27,17 +27,18 @@ object PhotoEdit extends Controller {
 			=> Photo(new ObjectId(id), album, name, labels, etc, comment, noDisp)
 		,unlift((p:Photo) => Some(p.id.toStringMongod, p.album, p.name, p.labels, p.etc, p.comment, p.noDisp))
 	)
-	
+
 
 
 	def info(album:String, name:String) = Action {
 		val photo = Photo.findOneByName(album, name).getOrElse(Photo(album = album, name = name))
+		println(album +";"+name +";"+photo)
 		Ok(Json.toJson(photo)).as("application/json")
 	}
 
 	def update = Action { request =>
     	request.body.asJson.map { json =>
-			json.validate[Photo].map{ 
+			json.validate[Photo].map{
  				case p:Photo => {
  					Photo.save(p)
  					Ok("")
