@@ -52,7 +52,7 @@ $(document).ready(function(){
 		location.href=location.pathname + "/" +$("#sheet").val()
 	})
 	$("#command").click(function() {
-		var c = "export SRC=\nexport DIST\n\n"
+		var c = "export SRC=\nexport DIST=\n\n"
 		$("div.tile").each(function(){
 			if (!$(this).hasClass("nodisp")) {
 				var size = parseInt($("span.count", $(this)).text())
