@@ -20,10 +20,15 @@ object Label extends ModelCompanion[Label, String] {
 
 object Photo extends ModelCompanion[Photo, ObjectId] {
   val dao = new SalatDAO[Photo, ObjectId](collection = mongoCollection("photo")) {}
-  
+
   def findOneByName(album:String, name:String) = dao.findOne(
       MongoDBObject("album" -> album, "name" -> name))
-  
+
+   def findByLabel(album:String, label:String) = dao.find(
+      MongoDBObject("album" -> album, "noDisp" -> false, "labels" -> label))
+      .sort(MongoDBObject("name" -> 1))
+      .toList
+
   def uniqueIndex() = mongoCollection("photo").ensureIndex(
       MongoDBObject("album" -> 1, "name" -> 1), MongoDBObject("unique" -> true))
 }

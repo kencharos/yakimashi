@@ -8,15 +8,21 @@
 		<div>@name <a id="slide" href="#">スライドショー</a>
 			<input type="checkbox" id="zero"/><label for="zero">0枚の写真を隠す</label>
 			&nbsp;
-			<input type="checkbox" id="nodisp"/><label for="nodisp">非表示の写真を表示</label>
+			<input type="checkbox" id="nodisp_check"/><label for="nodisp_check">非表示の写真を表示</label>
+			&nbsp;
+			<filedset>
+				<select id="sheet">@for(l <- label){<option value="@l.id">@l.name</option>}</select>&gt;
+				<input id="sheetbutton" type="button" value="選択した人の写真を見る">
+			</filedset>
+			&nbsp;
+			<input id="command" type="button" value="コマンドを見る(作者用)">
 		</div>
    @for(photo <- photos) {
    		<div class="tile @noDisp(photo.noDisp)">
-	   		<a class="inline" href="#inline_content"><img src="@routes.Assets.at(photo.url)"
-	   			alt="@photo.comment">
+	   		<a class="inline" href="#inline_content"><img src="@routes.Assets.at(photo.url)" alt="@photo.comment">
 	   		</a>
-			<span class="count">@photo.count</span>
-	   		<span class="group hide" href="@routes.Assets.at(photo.url)" title="@photo.comment"></span>
+				<span class="count">@photo.count</span>
+	   		<span class="hide" href="@routes.Assets.at(photo.url)" title="@photo.comment"></span>
    		</div>
    }
    <!-- This contains the hidden content for inline calls -->
@@ -27,9 +33,9 @@
 			<input type="hidden" id="name">
 			<input type="hidden" id="id" >
 			<fieldset><legend>プリント対象</legend>
-			<label for="noDisp">非表示にする</label><input id="noDisp" type="checkbox" /><br>
+			<input id="noDisp" type="checkbox" /><label for="noDisp">非表示にする</label><br>
 			@for(l <- label) {
-				<label for="label_@l.id">@l.name</label><input type="checkbox" id="label_@l.id" name="@l.id">
+				<input type="checkbox" id="label_@l.id" name="@l.id"><label for="label_@l.id">@l.name</label>&nbsp;&nbsp;
 			}
 			<br>
 			その他の枚数<select id="etc">

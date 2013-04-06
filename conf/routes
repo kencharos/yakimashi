@@ -10,6 +10,7 @@ GET     /                           controllers.Default.redirect(to = "/albums")
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET		/albums						controllers.Application.albums
 GET		/albums/:name				controllers.Application.photo(name:String)
+GET		/albums/:name/:label				controllers.Application.sheet(name:String, label:String)
 GET		/photo				controllers.PhotoEdit.info(album:String, name:String)
 POST	/photo				controllers.PhotoEdit.update
 GET		/label						controllers.LabelEdit.info

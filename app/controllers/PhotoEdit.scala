@@ -32,7 +32,6 @@ object PhotoEdit extends Controller {
 
 	def info(album:String, name:String) = Action {
 		val photo = Photo.findOneByName(album, name).getOrElse(Photo(album = album, name = name))
-		println(album +";"+name +";"+photo)
 		Ok(Json.toJson(photo)).as("application/json")
 	}
 
@@ -41,7 +40,7 @@ object PhotoEdit extends Controller {
 			json.validate[Photo].map{
  				case p:Photo => {
  					Photo.save(p)
- 					Ok("")
+ 					Ok(p.url)
  				}
 			}.recoverTotal{
 				e => BadRequest("Detected error:"+ JsError.toFlatJson(e))

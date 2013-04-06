@@ -24,4 +24,9 @@ object Application extends Controller {
   	  )
 	  Ok(views.html.photo(album, photos, Label.findSortedAll))
   }
+
+  def sheet(album:String, label:String) = Action{
+    Ok(views.html.sheet(album, Photo.findByLabel(album, label), Label.findOneById(label).get, Label.findSortedAll))
+
+  }
 }
