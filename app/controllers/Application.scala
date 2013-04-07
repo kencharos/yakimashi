@@ -3,7 +3,9 @@ package controllers
 import play.api._
 import play.api.mvc._
 import models._
-import java.io.File;
+import java.io.File
+import com.drew.imaging._;
+import com.drew.metadata.exif.ExifSubIFDDirectory
 
 object Application extends Controller {
 
@@ -15,11 +17,27 @@ object Application extends Controller {
   }
 
   def photo(album:String) = Action {
-  	var images = new File("public/album", album).listFiles().filter(_ isFile)
+  	var images = new File("public/album", album).listFiles().filter(_ isFile).sortBy(_ getName)
+
+  	def exifTime(f:File) = {
+  	  try {
+  		  val meta = ImageMetadataReader.readMetadata(f);
+        val date = meta.getDirectory(classOf[ExifSubIFDDirectory]).getDate(
+            ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
+        if (date == null) {
+          None
+        } else {
+          Some(date)
+        }
+  	  } catch {
+  	    case e => None
+  	  }
+  	}
+
   	val photos = images.map(f =>
   	    Photo.findOneByName(album, f.getName) match {
-  	      case None => Photo(album = album, name = f.getName)
-  	      case Some(p) => p
+  	      case None => (Photo(album = album, name = f.getName), exifTime(f))
+  	      case Some(p) => (p, exifTime(f))
   	    }
   	  )
 	  Ok(views.html.photo(album, photos, Label.findSortedAll))

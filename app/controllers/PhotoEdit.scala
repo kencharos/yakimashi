@@ -7,7 +7,6 @@ import play.api.data.Forms._
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import models._
-
 import com.mongodb.casbah.Imports._
 
 object PhotoEdit extends Controller {

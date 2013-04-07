@@ -1,4 +1,4 @@
-@(name:String, photos: Seq[models.Photo], label:Seq[models.Label])
+@(name:String, photos: Seq[(models.Photo, Option[java.util.Date])], label:Seq[models.Label])
 @import helper._
 
 @noDisp(flg:Boolean) = {@if(flg){nodisp}else{ }}
@@ -18,11 +18,15 @@
 			<input id="command" type="button" value="コマンドを見る(作者用)">
 		</div>
    @for(photo <- photos) {
-   		<div class="tile @noDisp(photo.noDisp)">
-	   		<a class="inline" href="#inline_content"><img src="@routes.Assets.at(photo.url)" alt="@photo.comment">
+   		<div class="tile @noDisp(photo._1.noDisp)">
+	   		<a class="inline" href="#inline_content"><img src="@routes.Assets.at(photo._1.url)" alt="@photo._1.comment">
 	   		</a>
-				<span class="count">@photo.count</span>
-	   		<span class="hide" href="@routes.Assets.at(photo.url)" title="@photo.comment"></span>
+			<span class="count">@photo._1.count</span>
+	   		<span class="hide" href="@routes.Assets.at(photo._1.url)" title="@photo._1.comment"></span>
+	   		@photo._2 match {
+	   			case Some(d) =>{<span class="date">@String.format("%tY/%tm/%td", d, d, d)</span>}
+	   			case None => {}
+	   		}
    		</div>
    }
    <!-- This contains the hidden content for inline calls -->

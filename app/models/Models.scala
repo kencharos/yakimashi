@@ -40,7 +40,7 @@ case class Photo(@Key("_id")id:ObjectId = new ObjectId,
 	etc:Int = 0,
 	comment:String = "",
 	noDisp:Boolean = false) {
-
+	
 	def count = labels.size + etc
 	def url = "album/" + album + "/" + name
 }

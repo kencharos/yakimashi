@@ -8,7 +8,9 @@ object ApplicationBuild extends Build {
     val appVersion      = "1.0-SNAPSHOT"
 
     val appDependencies = Seq(
-  		"se.radley" %% "play-plugins-salat" % "1.2"
+        // %% -> scala, %-> java
+  		"se.radley" %% "play-plugins-salat" % "1.2",
+        "com.drewnoakes" % "metadata-extractor" % "2.6.2"
 		)
 
     val main = play.Project(appName, appVersion, appDependencies).settings(
