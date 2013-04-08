@@ -34,18 +34,14 @@ object PhotoEdit extends Controller {
 		Ok(Json.toJson(photo)).as("application/json")
 	}
 
-	def update = Action { request =>
-    	request.body.asJson.map { json =>
-			json.validate[Photo].map{
- 				case p:Photo => {
- 					Photo.save(p)
- 					Ok(p.url)
- 				}
-			}.recoverTotal{
-				e => BadRequest("Detected error:"+ JsError.toFlatJson(e))
-			}
-		}.getOrElse {
-			BadRequest("Expecting Json data")
+	def update = Action(parse.json) { request =>
+    	request.body.validate[Photo].map{
+ 			case p:Photo => {
+ 				Photo.save(p)
+ 				Ok(p.url)
+ 			}
+		}.recoverTotal{
+			e => BadRequest("Detected error:"+ JsError.toFlatJson(e))
 		}
 	}
 }
