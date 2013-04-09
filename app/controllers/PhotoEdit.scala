@@ -9,7 +9,7 @@ import play.api.libs.functional.syntax._
 import models._
 import com.mongodb.casbah.Imports._
 
-object PhotoEdit extends Controller {
+object PhotoEdit extends Controller with Secured {
 
 	// Json - class transration
 	// To convert String - ObjectId, set custom constractor
@@ -29,17 +29,17 @@ object PhotoEdit extends Controller {
 
 
 
-	def info(album:String, name:String) = Action {
+	def info(album:String, name:String) = withAuth{ user => implicit request =>
 		val photo = Photo.findOneByName(album, name).getOrElse(Photo(album = album, name = name))
 		Ok(Json.toJson(photo)).as("application/json")
 	}
 
-	def update = Action(parse.json) { request =>
-    	request.body.validate[Photo].map{
- 			case p:Photo => {
- 				Photo.save(p)
- 				Ok(p.url)
- 			}
+	def update = withAuth(parse.json) { user => implicit request =>
+		request.body.validate[Photo].map{
+				case p:Photo => {
+					Photo.save(p)
+					Ok(p.url)
+				}
 		}.recoverTotal{
 			e => BadRequest("Detected error:"+ JsError.toFlatJson(e))
 		}

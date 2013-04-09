@@ -33,6 +33,12 @@ object Photo extends ModelCompanion[Photo, ObjectId] {
       MongoDBObject("album" -> 1, "name" -> 1), MongoDBObject("unique" -> true))
 }
 
+object User extends ModelCompanion[User, String] {
+  val dao = new SalatDAO[User, String](collection = mongoCollection("user")) {}
+}
+
+case class User(@(Key)("_id")user:String, passwordHash:String)
+
 case class Photo(@Key("_id")id:ObjectId = new ObjectId,
 	album:String,
 	name:String,
@@ -46,3 +52,5 @@ case class Photo(@Key("_id")id:ObjectId = new ObjectId,
 }
 
 case class Label(@Key("_id")id:String, name:String);
+
+

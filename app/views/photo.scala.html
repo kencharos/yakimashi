@@ -1,4 +1,4 @@
-@(name:String, photos: Seq[(models.Photo, Option[java.util.Date])], label:Seq[models.Label])
+@(name:String, photos: Seq[(models.Photo, Option[java.util.Date])], label:Seq[models.Label])(implicit session:Session)
 @import helper._
 
 @noDisp(flg:Boolean) = {@if(flg){nodisp}else{ }}

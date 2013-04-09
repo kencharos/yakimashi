@@ -2,11 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                           controllers.Default.redirect(to = "/albums")
-# Home page
+#login
+GET 	/						controllers.Auth.login
+POST 	/login						controllers.Auth.authenticate
+GET 	/logout						controllers.Auth.logout
 
 # Map static resources from the /public folder to the /assets URL path
+GET     /assets/album/*file         controllers.Application.secureAt(path="/public/album", file)
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET		/albums						controllers.Application.albums
 GET		/albums/:name				controllers.Application.photo(name:String)

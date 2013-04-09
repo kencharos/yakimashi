@@ -6,7 +6,7 @@ import play.api.data._
 import play.api.data.Forms._
 import models._
 
-object LabelEdit extends Controller {
+object LabelEdit extends Controller with Secured {
 
   val labelForm = Form(
     "labels" -> seq (
@@ -14,13 +14,13 @@ object LabelEdit extends Controller {
         "id" -> text ,
         "name" -> nonEmptyText)(Label.apply)(Label.unapply)))
 
-  def info = Action {
+  def info = withAuth{ user => implicit request =>
     
     Ok(views.html.label(labelForm.fill(Label.findSortedAll)))
 
   }
 
-  def update = Action { implicit request =>
+  def update = withAuth{ user => implicit request =>
     labelForm.bindFromRequest.fold(
       // on validation error
       errors => BadRequest(views.html.label(errors)),

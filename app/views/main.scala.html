@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(implicit session:Session)
 
 <!DOCTYPE html>
 
@@ -13,8 +13,15 @@
     </head>
     <body>
     		<h1>yakimashi</h1>
-    		<a href="/label">ラベル編集</a>
-    		<a href="/">アルバム一覧</a>
+            @session.get(Security.username) match {
+                case Some(name) => {
+                    welcome @name !
+                    <a href="/label">ラベル編集</a>
+                    <a href="/albums">アルバム一覧</a>
+                    <a href="/logout">ログアウト</a>
+                }
+                case None => {}
+            }
     		<hr>
         @content
     </body>

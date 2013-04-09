@@ -7,21 +7,25 @@ import java.io.File
 import com.drew.imaging._;
 import com.drew.metadata.exif.ExifSubIFDDirectory
 
-object Application extends Controller {
-
-  def albums = Action {
+object Application extends Controller with Secured {
+  
+  def secureAt(path:String, file:String) = withAuth{user =>
+    Assets.at(path, file).apply
+  }
+  
+  def albums = withAuth { user => implicit request => 
   	val files = new File("public/album").listFiles();
 
   	Ok(views.html.albums(files.filter(_ isDirectory).map(_ getName)));
 
   }
 
-  def photo(album:String) = Action {
+  def photo(album:String) = withAuth { user => implicit request => 
   	var images = new File("public/album", album).listFiles().filter(_ isFile).sortBy(_ getName)
 
   	def exifTime(f:File) = {
   	  try {
-  		  val meta = ImageMetadataReader.readMetadata(f);
+  		val meta = ImageMetadataReader.readMetadata(f);
         val date = meta.getDirectory(classOf[ExifSubIFDDirectory]).getDate(
             ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
         if (date == null) {
@@ -43,7 +47,7 @@ object Application extends Controller {
 	  Ok(views.html.photo(album, photos, Label.findSortedAll))
   }
 
-  def sheet(album:String, label:String) = Action{
+  def sheet(album:String, label:String) = withAuth{ user => implicit request =>
     Ok(views.html.sheet(album, Photo.findByLabel(album, label), Label.findOneById(label).get, Label.findSortedAll))
 
   }
