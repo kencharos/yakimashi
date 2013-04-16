@@ -21,6 +21,15 @@ $(document).ready(function(){
 	$("#slide").click(function(){
 		$("div.tile .group")
 			.colorbox({rel:'group', transition:"none", width:"90%", height:"100%",slideshow:true,slideshowSpeed:4000})
+		$("#cboxContent").on({
+		  'swipeleft' : function(ev) {
+		    $("#cboxNext").click()
+		  },
+		  'swiperight' : function(ev) {
+		    $("#cboxPrevious").click()
+		  }
+		});
+
 		$(".group:first").click() })
 	$("#zero").click(updateTile)
 	$("#nodisp_check").click(updateTile)
@@ -65,6 +74,14 @@ $(document).ready(function(){
 		})
 		alert(c)
 	})
+	$('#inline_content').on({
+		  'swipeleft' : function(ev) {
+		    $("#next").click()
+		  },
+		  'swiperight' : function(ev) {
+		    $("#prev").click()
+		  }
+		});
 	var filterImage = function(){
 		var array = new Array()
 		$("div.tile").each(function(){
@@ -146,7 +163,7 @@ $(document).ready(function(){
 				}
 				updateTile()
 				cont(imgUrl)
-			})
+		})
 	}
 
 
