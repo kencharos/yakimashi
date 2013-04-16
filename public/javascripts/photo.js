@@ -34,6 +34,7 @@ $(document).ready(function(){
 	$("#zero").click(updateTile)
 	$("#nodisp_check").click(updateTile)
 	$("#next").click(function() {
+			$("#loading").fadeIn(0);
 			updateModal(function(imgUrl){
 				var list = filterImage();
 				var i = indexImg(list, imgUrl);
@@ -43,9 +44,12 @@ $(document).ready(function(){
 				} else {
 					initialModal(list[i + 1])
 				}
-		})
+
+				$("#loading").fadeOut(0);
+			})
 	})
 	$("#prev").click(function() {
+			$("#loading").fadeIn(0);
 			updateModal(function(imgUrl){
 				var list = filterImage();
 				var i = indexImg(list, imgUrl);
@@ -55,7 +59,8 @@ $(document).ready(function(){
 				} else {
 					initialModal(list[i - 1])
 				}
-		})
+				$("#loading").fadeOut(0);
+			})
 	})
 	$("#sheetbutton").click(function(){
 		location.href=location.pathname + "/" +$("#sheet").val()
@@ -68,12 +73,18 @@ $(document).ready(function(){
 				var name = $("img", $(this)).attr("src").split("/").reverse()[0];
 				console.log(size +":"+$("img", $(this)).attr("src"))
 				for (var i = 0; i < size; i++) {
-					c = c + "$SRC/" + name +" $DIST/" + name.split(".")[0] +"_" + i +"." + name.split(".")[1] + "\n"
+					c = c + "cp $SRC/" + name +" $DIST/" + name.split(".")[0] +"_" + i +"." + name.split(".")[1] + "\n"
 				}
 			}
 		})
 		alert(c)
 	})
+
+	$('#inline_content img').on({
+		"touchstart mousedown touchmove mousemove touchend mouseup mouseout":function(ev){
+			ev.preventDefault();
+		}
+	});
 	$('#inline_content').on({
 		  'swipeleft' : function(ev) {
 		    $("#next").click()
@@ -81,7 +92,8 @@ $(document).ready(function(){
 		  'swiperight' : function(ev) {
 		    $("#prev").click()
 		  }
-		});
+	});
+
 	var filterImage = function(){
 		var array = new Array()
 		$("div.tile").each(function(){
