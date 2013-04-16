@@ -16,7 +16,7 @@ object Application extends Controller with Secured {
   def albums = withAuth { user => implicit request => 
   	val files = new File("public/album").listFiles();
 
-  	Ok(views.html.albums(files.filter(_ isDirectory).map(_ getName)));
+  	Ok(views.html.albums(files.filter(_ isDirectory).map(_ getName).sorted));
 
   }
 
