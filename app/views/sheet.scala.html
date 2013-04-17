@@ -3,7 +3,7 @@
 
 @main(name) {
 		<script src="@routes.Assets.at("javascripts/sheet.js")" type="text/javascript"></script>
-		<div>@name:"@labal.name"に送る写真 &nbsp;<a id="slide" href="#">スライドショー</a>
+		<div>@name:"@labal.name"に送る写真 &nbsp;
 		&nbsp;
 			<filedset>
 				<select id="sheet">@for(l <- labels){<option value="@l.id">@l.name</option>}</select>&gt;
@@ -12,7 +12,7 @@
 		</div>
    @for(photo <- photos) {
    		<div class="tile">
-   			<a href="@routes.Assets.at(photo.url)" class="group">
+   			<a href="@routes.Assets.at(photo.url)" class="swipebox">
 	   			<img src="@routes.Assets.at(photo.url)" alt="@photo.comment">
 	   		</a>
    		</div>
