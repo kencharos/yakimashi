@@ -1,5 +1,7 @@
 $(document).ready(function(){
-	$(".swipebox").swipebox();
+	$(".swipebox").swipebox({
+		rightBar : false
+	});
 	
 	var index = location.pathname.lastIndexOf("/");
 	$("#sheetbutton").click(function(){

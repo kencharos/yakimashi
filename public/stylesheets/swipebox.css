@@ -64,6 +64,13 @@
   height: 50px;
   width: 100%;
 }
+#swipebox-right {
+  position: absolute;
+  bottom: 50px;
+  z-index: 999;
+  height: 80%;
+  width: 20%;
+}
 
 #swipebox-action {
   bottom: -50px;
@@ -86,6 +93,18 @@
 
 #swipebox-caption.force-visible-bars {
   top: 0!important;
+}
+
+#swipebox-right {
+  right: -300px;
+  text-align: left;
+}
+#swipebox-right.visible-bars {
+  right: 0;
+}
+
+#swipebox-right.force-visible-bars {
+  right: 0!important;
 }
 
 #swipebox-action #swipebox-prev, #swipebox-action #swipebox-next,
@@ -194,7 +213,7 @@
   background: #0d0d0d;
 }
 
-#swipebox-action, #swipebox-caption {
+#swipebox-action, #swipebox-caption,#swipebox-right {
   text-shadow: 1px 1px 1px black;
   background-color: #0d0d0d;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #0d0d0d), color-stop(100%, #000000));
@@ -205,8 +224,8 @@
   -webkit-box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
   -moz-box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
   box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=95);
-  opacity: 0.95;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.80;
 }
 
 #swipebox-action {
@@ -215,7 +234,7 @@
   box-shadow: 0 -1px -1px 1px #212121, inset 0 -1px -1px 1px black;
 }
 
-#swipebox-caption {
+#swipebox-caption,#swipebox-right{
   color: white!important;
   font-size: 15px;
   line-height: 43px;

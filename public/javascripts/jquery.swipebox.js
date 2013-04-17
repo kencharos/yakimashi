@@ -14,7 +14,8 @@
 
 		var defaults = {
 			useCSS : true,
-			hideBarsDelay : 3000
+			hideBarsDelay : 2000,
+			rightBar : false
 		},
 		
 			plugin = this,
@@ -27,6 +28,7 @@
 			html = '<div id="swipebox-overlay">\
 					<div id="swipebox-slider"></div>\
 					<div id="swipebox-caption"></div>\
+					<div id="swipebox-right"></div>\
 					<div id="swipebox-action">\
 						<a id="swipebox-close"></a>\
 						<a id="swipebox-prev"></a>\
@@ -80,7 +82,7 @@
 						'-khtml-transition' : 'opacity 1s ease',
 						'transition' : 'opacity 1s ease'
 					});
-					$('#swipebox-action, #swipebox-caption').css({
+					$('#swipebox-action, #swipebox-caption, #swipebox-right').css({
 						'-webkit-transition' : '0.5s',
 						'-moz-transition' : '0.5s',
 						'-o-transition' : '0.5s',
@@ -139,6 +141,10 @@
 				}
 			},
 
+			useRight : function() {
+				return plugin.settings.rightBar;
+			},
+
 			gesture : function(){
 				if ( isTouch ){
 					var $this = this,
@@ -146,7 +152,7 @@
 					swipMinDistance = 10,
 					startCoords = {}, 
 					endCoords = {};
-					var b = $('#swipebox-caption, #swipebox-action');
+					var b = $('#swipebox-caption, #swipebox-action' + (this.useRight() ? ', #swipebox-right' : ''));
 
 					b.addClass('visible-bars');
 					$this.setTimeout();
@@ -218,12 +224,13 @@
 			},
 
 			showBars : function(){
-				var b = $('#swipebox-caption, #swipebox-action');
+				var b = $('#swipebox-caption, #swipebox-action' + (this.useRight() ? ', #swipebox-right' : ''));
 				if(this.doCssTrans()){
 					b.addClass('visible-bars');
 				}else{
 					$('#swipebox-caption').animate({ top : 0 }, 500);
 					$('#swipebox-action').animate({ bottom : 0 }, 500);
+					if(this.useRight()) $('#swipebox-right').animate({ right : 0 }, 500);
 					setTimeout(function(){
 						b.addClass('visible-bars');
 					}, 1000);
@@ -231,12 +238,13 @@
 			},
 
 			hideBars : function(){
-				var b = $('#swipebox-caption, #swipebox-action');
+				var b = $('#swipebox-caption, #swipebox-action' + (this.useRight() ? ', #swipebox-right' : ''));
 				if(this.doCssTrans()){
 					b.removeClass('visible-bars');
 				}else{
 					$('#swipebox-caption').animate({ top : '-50px' }, 500);
 					$('#swipebox-action').animate({ bottom : '-50px' }, 500);
+					if(this.useRight()) $('#swipebox-right').animate({ right : '-300px' }, 500);
 					setTimeout(function(){
 						b.removeClass('visible-bars');
 					}, 1000);
@@ -245,28 +253,29 @@
 
 			animBars : function(){
 				var $this = this;
-				var b = $('#swipebox-caption, #swipebox-action');
+				var b = $('#swipebox-caption, #swipebox-action' + (this.useRight() ? ', #swipebox-right' : ''));
 					
-				b.addClass('visible-bars');
-				$this.setTimeout();
+				//b.addClass('visible-bars');
+				//$this.setTimeout();
 				
 				$('#swipebox-slider').click(function(e){
 					if(!b.hasClass('visible-bars')){
 						$this.showBars();
-						$this.setTimeout();
+					} else {
+						$this.hideBars();
 					}
 				});
 
 				$('#swipebox-action').hover(function() {
 				  		$this.showBars();
 						b.addClass('force-visible-bars');
-						$this.clearTimeout();
-					
+						//$this.clearTimeout();
+						
 					},function() { 
 						b.removeClass('force-visible-bars');
-						$this.setTimeout();
-
+						//$this.setTimeout();
 				});
+
 			},
 
 			keyboard : function(){
