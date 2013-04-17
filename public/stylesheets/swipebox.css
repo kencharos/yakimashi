@@ -207,7 +207,7 @@
   }
 }
 
-/* Skin 
+/* Skin
 --------------------------*/
 #swipebox-overlay {
   background: #0d0d0d;
@@ -234,9 +234,15 @@
   box-shadow: 0 -1px -1px 1px #212121, inset 0 -1px -1px 1px black;
 }
 
-#swipebox-caption,#swipebox-right{
+#swipebox-caption{
   color: white!important;
   font-size: 15px;
   line-height: 43px;
   font-family: Helvetica, Arial, sans-serif;
 }
+#swipebox-right{
+  color: white!important;
+  font-size: 12px;
+  font-family: Helvetica, Arial, sans-serif;
+}
+

@@ -1,67 +1,38 @@
 $(document).ready(function(){
-	//$(".group").colorbox({rel:'group', transition:"none", width:"90%", height:"90%",slideshow:true,slideshowSpeed:4000});
+
+	var swipeboxParam = {
+		rightBar : true,
+		rightBarInitial : function(slide){
+			initialModal($("img", slide).attr("src"))
+		},
+		rightBarUpdate : function(){
+			updateModal()
+		},
+		rightBarHtmlId : "inline_content"
+	}
+
 	var updateTile = function() {
 		var zero = $("#zero").is(":checked");
 		var noDisp = $("#nodisp_check").is(":checked");
+		var print =0;
 		$("div.tile").each(function(){
+			$("a",$(this)).removeClass("swipebox")
+
 			if ((!noDisp && $(this).hasClass("nodisp")) || (zero & $("span.count", $(this)).text() == "0")) {
-				$("span.hide",$(this)).removeClass("group")
 				$(this).fadeOut(800)
 			} else {
-				var group = $("span.hide",$(this));
-				group.addClass("group")
+				var swipebox = $("a",$(this));
+				swipebox.addClass("swipebox")
 				$(this).fadeIn(800)
+				print += parseInt($("span.count", $(this)).text());
 			}
 		})
+		$("#print").text(print);
 	}
 
-
-	$(".inline").colorbox({inline:true, width:"90%", height:"90%"});
-	$(".inline").click(function(){initialModal($("img",$(this)).attr("src"))})
-	$("#slide").click(function(){
-		$("div.tile .group")
-			.colorbox({rel:'group', transition:"none", width:"90%", height:"100%",slideshow:true,slideshowSpeed:4000})
-		$("#cboxContent").on({
-		  'swipeleft' : function(ev) {
-		    $("#cboxNext").click()
-		  },
-		  'swiperight' : function(ev) {
-		    $("#cboxPrevious").click()
-		  }
-		});
-
-		$(".group:first").click() })
 	$("#zero").click(updateTile)
 	$("#nodisp_check").click(updateTile)
-	$("#next").click(function() {
-			$("#loading").fadeIn(0);
-			updateModal(function(imgUrl){
-				var list = filterImage();
-				var i = indexImg(list, imgUrl);
-				if (i == list.length - 1) {
-					alert("先頭に戻ります。")
-					initialModal(list[0])
-				} else {
-					initialModal(list[i + 1])
-				}
 
-				$("#loading").fadeOut(0);
-			})
-	})
-	$("#prev").click(function() {
-			$("#loading").fadeIn(0);
-			updateModal(function(imgUrl){
-				var list = filterImage();
-				var i = indexImg(list, imgUrl);
-				if (i == 0) {
-					alert("最後にいきます。")
-					initialModal(list[list.length -1])
-				} else {
-					initialModal(list[i - 1])
-				}
-				$("#loading").fadeOut(0);
-			})
-	})
 	$("#sheetbutton").click(function(){
 		location.href=location.pathname + "/" +$("#sheet").val()
 	})
@@ -80,41 +51,7 @@ $(document).ready(function(){
 		alert(c)
 	})
 
-	$('#inline_content img').on({
-		"touchstart mousedown touchmove mousemove touchend mouseup mouseout":function(ev){
-			ev.preventDefault();
-		}
-	});
-	$('#inline_content').on({
-		  'swipeleft' : function(ev) {
-		    $("#next").click()
-		  },
-		  'swiperight' : function(ev) {
-		    $("#prev").click()
-		  }
-	});
-
-	var filterImage = function(){
-		var array = new Array()
-		$("div.tile").each(function(){
-			if(!$(this).hasClass("nodisp")) {
-				array.push($("img",$(this)).attr("src"))
-			}
-		})
-		return array
-	}
-	var indexImg = function(array, url) {
-
-		for (i in array) {
-			if (array[i].indexOf(url) >= 0) {
-				return parseInt(i)
-			}
-		}
-		return -1
-	}
 	var initialModal = function(img) {
-
-				console.log(img)
 		var path = img.split("/")
 		$.get("/photo",
     		{"album": path[path.length - 2], "name":path[path.length - 1]}
@@ -142,8 +79,7 @@ $(document).ready(function(){
 		);
 	}
 
-	var updateModal = function(cont) {
-
+	var updateModal = function() {
 		var array = new Array()
 		$("#inline_content input[type='checkbox']").each(function(){
 			if (this.id.indexOf("label_") == 0 && this.checked) {
@@ -166,7 +102,7 @@ $(document).ready(function(){
 			contentType:"application/json; charset=utf-8"
 		}).done(function(imgUrl) {
 				var cnt = json.labels.length + json.etc
-				var tile = $("div.tile span[href$='" + imgUrl + "']").parent()
+				var tile = $("div.tile img[src$='" + imgUrl + "']").parent().parent();
 				$("span.count", tile).text(cnt + "")
 				if (json.noDisp) {
 					tile.addClass("nodisp")
@@ -174,10 +110,9 @@ $(document).ready(function(){
 					tile.removeClass("nodisp")
 				}
 				updateTile()
-				cont(imgUrl)
 		})
 	}
 
-
 	updateTile();
+		$("div.tile .swipebox").swipebox(swipeboxParam);
 });

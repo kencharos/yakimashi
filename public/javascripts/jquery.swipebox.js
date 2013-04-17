@@ -6,18 +6,24 @@
 @version     1.1.1
 @license      MIT License
 
+I fork this script.
+add follows functions.
+- right sidebar and sidebar sunction
 ----------------------------------------------------------------------------------------------*/
 
 ;(function (window, document, $, undefined) {
-	
+
 	$.swipebox = function(elem, options) {
 
 		var defaults = {
 			useCSS : true,
-			hideBarsDelay : 2000,
-			rightBar : false
+			hideBarsDelay : 3000,
+			rightBar : false,
+			rightBarInitial : function(slide){},
+			rightBarUpdate : function(){},
+			rightBarHtmlId : ""
 		},
-		
+
 			plugin = this,
 			$elem = $(elem),
 			elem = elem,
@@ -41,7 +47,7 @@
 		plugin.init = function(){
 
 			plugin.settings = $.extend({}, defaults, options);
-			
+
 			$selector.click(function(e){
 				e.preventDefault();
 				e.stopPropagation();
@@ -51,6 +57,7 @@
 			});
 		}
 
+		var restore = null;
 		var ui = {
 
 			init : function(index){
@@ -61,10 +68,9 @@
 				this.preloadImg(index+1);
 				this.preloadImg(index-1);
 			},
-
 			build : function(){
 				var $this = this;
-				
+
 				$('body').append(html);
 
 				if($this.doCssTrans()){
@@ -89,8 +95,14 @@
 						'-khtml-transition' : '0.5s',
 						'transition' : '0.5s'
 					});
+					// initial inlinecontent
+					if (this.useRight()) {
+						restore =$("#" + plugin.settings.rightBarHtmlId).parent();
+						var rightBarHtml = $("#" + plugin.settings.rightBarHtmlId).parent().html();
+						$("#swipebox-right").html(rightBarHtml)
+						restore.html("");
+					}
 				}
-
 
 				if(supportSVG){
 					var bg = $('#swipebox-action #swipebox-close').css('background-image');
@@ -99,7 +111,7 @@
 						'background-image' : bg
 					});
 				}
-				
+
 				$elem.each(function(){
 					$('#swipebox-slider').append('<div class="slide"></div>');
 				});
@@ -144,19 +156,25 @@
 			useRight : function() {
 				return plugin.settings.rightBar;
 			},
+			rightBarInitial : function(slide) {
+				 plugin.settings.rightBarInitial(slide);
+			},
+			rightBarUpdate: function() {
+				return plugin.settings.rightBarUpdate();
+			},
 
 			gesture : function(){
 				if ( isTouch ){
 					var $this = this,
 					distance = null,
 					swipMinDistance = 10,
-					startCoords = {}, 
+					startCoords = {},
 					endCoords = {};
 					var b = $('#swipebox-caption, #swipebox-action' + (this.useRight() ? ', #swipebox-right' : ''));
 
 					b.addClass('visible-bars');
 					$this.setTimeout();
-					
+
 					$('body').bind('touchstart', function(e){
 
 						$(this).addClass('touching');
@@ -170,15 +188,15 @@
 		    					endCoords = e.originalEvent.targetTouches[0];
 
 						});
-			           			
+
 			           			return false;
 
 	           			}).bind('touchend',function(e){
 	           				e.preventDefault();
 						e.stopPropagation();
-	   				
+
 	   					distance = endCoords.pageX - startCoords.pageX;
-	       				
+
 	       				if( distance >= swipMinDistance ){
 	       					// swipeLeft
 	       					$this.getPrev();
@@ -187,7 +205,7 @@
 	       				else if( distance <= - swipMinDistance ){
 	       					// swipeRight
 	       					$this.getNext();
-	       				
+
 	       				}else{
 	       					// tap
 	       					if(!b.hasClass('visible-bars')){
@@ -198,10 +216,10 @@
 							$this.hideBars();
 						}
 
-	       				}	
+	       				}
 
 	       				$('.touching').off('touchmove').removeClass('touching');
-						
+
 					});
 
            			}
@@ -217,8 +235,8 @@
 					);
 				}
 			},
-			
-			clearTimeout: function(){	
+
+			clearTimeout: function(){
 				window.clearTimeout(this.timeout);
 				this.timeout = null;
 			},
@@ -254,10 +272,10 @@
 			animBars : function(){
 				var $this = this;
 				var b = $('#swipebox-caption, #swipebox-action' + (this.useRight() ? ', #swipebox-right' : ''));
-					
+
 				//b.addClass('visible-bars');
 				//$this.setTimeout();
-				
+
 				$('#swipebox-slider').click(function(e){
 					if(!b.hasClass('visible-bars')){
 						$this.showBars();
@@ -270,8 +288,8 @@
 				  		$this.showBars();
 						b.addClass('force-visible-bars');
 						//$this.clearTimeout();
-						
-					},function() { 
+
+					},function() {
 						b.removeClass('force-visible-bars');
 						//$this.setTimeout();
 				});
@@ -297,7 +315,7 @@
 
 			actions : function(){
 				var $this = this;
-				
+
 				if( $elem.length < 2 ){
 					$('#swipebox-prev, #swipebox-next').hide();
 				}else{
@@ -307,7 +325,7 @@
 						$this.getPrev();
 						$this.setTimeout();
 					});
-					
+
 					$('#swipebox-next').bind('click touchend', function(e){
 						e.preventDefault();
 						e.stopPropagation();
@@ -320,22 +338,24 @@
 					$this.closeSlide();
 				});
 			},
-			
+
 			setSlide : function (index, isFirst){
 				isFirst = isFirst || false;
-				
+
 				var slider = $('#swipebox-slider');
-				
+
 				if(this.doCssTrans()){
 					slider.css({ left : (-index*100)+'%' });
 				}else{
 					slider.animate({ left : (-index*100)+'%' });
 				}
-				
+
 				$('#swipebox-slider .slide').removeClass('current');
 				$('#swipebox-slider .slide').eq(index).addClass('current');
 				this.setTitle(index);
-
+				if (this.useRight()) {
+					this.rightBarInitial($elem.eq(index));
+				}
 				if( isFirst ){
 					slider.fadeIn();
 				}
@@ -347,21 +367,21 @@
 					$('#swipebox-next').addClass('disabled');
 				}
 			},
-		
+
 			openSlide : function (index){
-				
+
 				$('body').addClass('swipebox');
 				$(window).trigger('resize'); // fix scroll bar visibility on desktop
 				this.setSlide(index, true);
 			},
-		
+
 			preloadImg : function (index){
 				var $this = this;
 				setTimeout(function(){
 					$this.openImg(index);
 				}, 1000);
 			},
-			
+
 			openImg : function (index){
 				var $this = this;
 				if(index < 0 || index >= $elem.length){
@@ -376,47 +396,53 @@
 
 			setTitle : function(index, isFirst){
 				$('#swipebox-caption').empty();
-				
+
 				if($elem.eq(index).attr('title')){
 					$('#swipebox-caption').append($elem.eq(index).attr('title'));
 				}
 			},
-			
+
 			loadImg : function (src, callback){
 				var img = $('<img>').on('load', function(){
 					callback.call(img);
 				});
-				
+
 				img.attr('src',src);
 			},
-			
+
 			getNext : function (){
 				var $this = this;
 				index = $('#swipebox-slider .slide').index($('#swipebox-slider .slide.current'));
 				if(index+1 < $elem.length){
+					if (this.useRight) {
+						this.rightBarUpdate()
+					}
 					index++;
 					$this.setSlide(index);
 					$this.preloadImg(index+1);
 				}
 				else{
-					
+
 					$('#swipebox-slider').addClass('rightSpring');
 					setTimeout(function(){
 						$('#swipebox-slider').removeClass('rightSpring');
 					},500);
 				}
 			},
-			
+
 			getPrev : function (){
 				var $this = this;
 				index = $('#swipebox-slider .slide').index($('#swipebox-slider .slide.current'));
 				if(index > 0){
+					if (this.useRight) {
+						this.rightBarUpdate()
+					}
 					index--;
 					$this.setSlide(index);
 					$this.preloadImg(index-1);
 				}
 				else{
-					
+
 					$('#swipebox-slider').addClass('leftSpring');
 					setTimeout(function(){
 						$('#swipebox-slider').removeClass('leftSpring');
@@ -427,6 +453,14 @@
 
 			closeSlide : function (){
 				var $this = this;
+				// restore inline content
+				if (this.useRight()) {
+
+					this.rightBarUpdate();
+					var rightBarHtml = $("#swipebox-right").html();
+					restore.html(rightBarHtml)
+					$("#swipebox-right").html("")
+				}
 				$(window).trigger('resize');
 				$('body').removeClass('swipebox');
 				$this.destroy();
@@ -447,7 +481,7 @@
 		}
 
 		plugin.init();
-		
+
 	}
 
 	$.fn.swipebox = function(options){

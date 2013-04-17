@@ -1,7 +1,5 @@
 @size: 200px;
-h1 {
-	display: inline;
-}
+
 .tile {
 	width: @size;
 	height: @size;
@@ -10,15 +8,14 @@ h1 {
 	margin-left: 5px;
 	margin-top: 5px;
 
-	a {
-
-		img {
-			border:0;
-			max-width: @size;
-			max-height: @size;
-		}
+	img {
+		border:0;
+		max-width: @size;
+		max-height: @size;
 	}
+
 	span.count {
+		font-size: 8pt;
 		color: white;
 		background-color: black;
 		text-align: center;
@@ -27,6 +24,7 @@ h1 {
 		height: 20px;
 	}
 	span.date {
+		font-size: 8pt;
 		color: white;
 		background-color: black;
 		text-align: left;
@@ -37,7 +35,13 @@ h1 {
 
 }
 #inline_content {
-	z-index: 99999!important;
+	position: absolute;
+	bottom:0;
+}
+
+
+#inline_content textarea{
+	color:black!important;
 }
 
 
@@ -52,6 +56,7 @@ h1 {
 }
 
 .nodisp:after {
+	font-size: 8pt;
 	content:"非表示";
 	color: white;
 	background-color: black;
