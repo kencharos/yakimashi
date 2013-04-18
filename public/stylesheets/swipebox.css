@@ -12,7 +12,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99999!important;
+  z-index: 9998!important;
   overflow: hidden;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -66,10 +66,10 @@
 }
 #swipebox-right {
   position: absolute;
+  z-index: 9999!important;
   bottom: 50px;
-  z-index: 999;
-  height: 80%;
-  width: 20%;
+  height: 75%;
+  width: 30%;
 }
 
 #swipebox-action {
@@ -96,7 +96,7 @@
 }
 
 #swipebox-right {
-  right: -300px;
+  right: -30%;
   text-align: left;
 }
 #swipebox-right.visible-bars {
@@ -108,7 +108,7 @@
 }
 
 #swipebox-action #swipebox-prev, #swipebox-action #swipebox-next,
-#swipebox-action #swipebox-close {
+#swipebox-close {
   background-image: url("img/icons.png");
   background-repeat: no-repeat;
   border: none!important;
@@ -120,9 +120,9 @@
   top: 0;
 }
 
-#swipebox-action #swipebox-close {
+#swipebox-close {
   background-position: 15px 12px;
-  left: 40px;
+  right: 40px;
 }
 
 #swipebox-action #swipebox-prev {
@@ -224,8 +224,8 @@
   -webkit-box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
   -moz-box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
   box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  opacity: 0.80;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
+  opacity: 0.75;
 }
 
 #swipebox-action {
@@ -242,7 +242,7 @@
 }
 #swipebox-right{
   color: white!important;
-  font-size: 12px;
-  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px!important;
+  font-family Helvetica, Arial, sans-serif;
 }
 

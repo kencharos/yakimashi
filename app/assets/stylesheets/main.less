@@ -1,4 +1,7 @@
-@size: 200px;
+@size: 150px;
+body {
+    -webkit-text-size-adjust: 100%;
+}
 
 .tile {
 	width: @size;
@@ -15,35 +18,50 @@
 	}
 
 	span.count {
-		font-size: 8pt;
+		font-size: 11pt;
 		color: white;
 		background-color: black;
 		text-align: center;
+		vertical-align: middle;
 		position: absolute; top:0; right:0;
 		width: 20px;
-		height: 20px;
+		height: 18px;
+  		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  		opacity: 0.70;
 	}
 	span.date {
-		font-size: 8pt;
+		font-size: 11pt;
 		color: white;
 		background-color: black;
-		text-align: left;
-		position: absolute; bottom:40px; right:0;
-		width: 100px;
-		height: 20px;
+		text-align: right;
+		vertical-align: middle;
+		position: absolute; bottom:30px; right:0;
+		width: 90px;
+		height: 18px;
+  		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  		opacity: 0.70;
 	}
 
 }
 #inline_content {
 	position: absolute;
 	bottom:0;
+	right:0;
+	z-index :99999;
+	div div {
+		float:left;
+		
+	}
+	div:after{
+		content: "";
+		clear: both;
+		display:block;
+	}
+	textarea{
+		color:black!important;
+		width: 90%;
+	}
 }
-
-
-#inline_content textarea{
-	color:black!important;
-}
-
 
 .loading {
 	display: none;
@@ -56,13 +74,16 @@
 }
 
 .nodisp:after {
-	font-size: 8pt;
+	font-size: 10pt;
 	content:"非表示";
 	color: white;
 	background-color: black;
 	text-align: center;
+	vertical-align: middle;
 	position: absolute; top:20px; right:0;
-	width: 60px;
+	width: 55px;
 	height: 20px;
+  		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  		opacity: 0.80;
 }
 

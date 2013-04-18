@@ -35,19 +35,21 @@
 			<input type="hidden" id="album">
 			<input type="hidden" id="name">
 			<input type="hidden" id="id" >
-			<span id="current"></span>
 			<fieldset><legend>プリント対象</legend>
+			<div>
 			@for(l <- label) {
-				<input type="checkbox" id="label_@l.id" name="@l.id"><label for="label_@l.id">@l.name</label><br>
+				<div><input type="checkbox" id="label_@l.id" name="@l.id"><label for="label_@l.id">@l.name</label>
+				</div>
 			}
-			その他の枚数<select id="etc">
+			</div>
+			その他<select id="etc">
 				@for(i <- 0 to 10) { <option value="@i">@i</option>}
 			</select>
-			<br><br>
-			<input id="noDisp" type="checkbox" /><label for="noDisp">非表示にする</label><br>
+			<br>
+			<input id="noDisp" type="checkbox" /><label for="noDisp">非表示にする</label>
 			</fieldset>
 			<fieldset><legend>コメント</legend>
-				<textarea cols="25" rows="5" id="comment"></textarea>
+				<textarea rows="3" id="comment"></textarea>
 			</fieldset>
 		</div>
 	</div>

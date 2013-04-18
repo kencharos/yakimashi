@@ -33,10 +33,11 @@ add follows functions.
 			supportSVG = !!(window.SVGSVGElement),
 			html = '<div id="swipebox-overlay">\
 					<div id="swipebox-slider"></div>\
-					<div id="swipebox-caption"></div>\
+					<div id="swipebox-caption">\
+						<span></span><a id="swipebox-close"></a>\
+					</div>\
 					<div id="swipebox-right"></div>\
 					<div id="swipebox-action">\
-						<a id="swipebox-close"></a>\
 						<a id="swipebox-prev"></a>\
 						<a id="swipebox-next"></a>\
 					</div>\
@@ -105,9 +106,9 @@ add follows functions.
 				}
 
 				if(supportSVG){
-					var bg = $('#swipebox-action #swipebox-close').css('background-image');
+					var bg = $('#swipebox-close').css('background-image');
 					bg = bg.replace('png', 'svg');
-					$('#swipebox-action #swipebox-prev,#swipebox-action #swipebox-next,#swipebox-action #swipebox-close').css({
+					$('#swipebox-action #swipebox-prev,#swipebox-action #swipebox-next,#swipebox-close').css({
 						'background-image' : bg
 					});
 				}
@@ -172,10 +173,10 @@ add follows functions.
 					endCoords = {};
 					var b = $('#swipebox-caption, #swipebox-action' + (this.useRight() ? ', #swipebox-right' : ''));
 
-					b.addClass('visible-bars');
-					$this.setTimeout();
+					//b.addClass('visible-bars');
+					//$this.setTimeout();
 
-					$('body').bind('touchstart', function(e){
+					$('#swipebox-slider,#swipebox-action,#swipebox-caption').bind('touchstart', function(e){
 
 						$(this).addClass('touching');
 
@@ -192,37 +193,35 @@ add follows functions.
 			           			return false;
 
 	           			}).bind('touchend',function(e){
+
 	           				e.preventDefault();
-						e.stopPropagation();
+							e.stopPropagation();
+	   						distance = endCoords.pageX - startCoords.pageX;
 
-	   					distance = endCoords.pageX - startCoords.pageX;
+	       					if( distance >= swipMinDistance ){
+	       						// swipeLeft
+	       						$this.getPrev();
+	       					}else if( distance <= - swipMinDistance ){
+	       						// swipeRight
+	       						$this.getNext();
 
-	       				if( distance >= swipMinDistance ){
-	       					// swipeLeft
-	       					$this.getPrev();
-	       				}
-
-	       				else if( distance <= - swipMinDistance ){
-	       					// swipeRight
-	       					$this.getNext();
-
-	       				}else{
-	       					// tap
-	       					if(!b.hasClass('visible-bars')){
-							$this.showBars();
-							$this.setTimeout();
-						}else{
-							$this.clearTimeout();
-							$this.hideBars();
-						}
-
-	       				}
+	       					}else{
+	       					// tap				
+		       				if(!b.hasClass('visible-bars')){
+								$this.showBars();
+								//$this.setTimeout();
+							}else{
+								//$this.clearTimeout();
+								$this.hideBars();
+							}
+		       			}
 
 	       				$('.touching').off('touchmove').removeClass('touching');
 
-					});
+						}
+					);
 
-           			}
+           		}
 			},
 
 			setTimeout: function(){
@@ -262,7 +261,7 @@ add follows functions.
 				}else{
 					$('#swipebox-caption').animate({ top : '-50px' }, 500);
 					$('#swipebox-action').animate({ bottom : '-50px' }, 500);
-					if(this.useRight()) $('#swipebox-right').animate({ right : '-300px' }, 500);
+					if(this.useRight()) $('#swipebox-right').animate({ bottom : '-40%' }, 500);
 					setTimeout(function(){
 						b.removeClass('visible-bars');
 					}, 1000);
@@ -395,12 +394,12 @@ add follows functions.
 
 
 			setTitle : function(index, isFirst){
-				$('#swipebox-caption').empty();
+				$('#swipebox-caption span').empty();
 				// add current of all caption
-				$('#swipebox-caption').append((index + 1) + " of " + $elem.length);
+				$('#swipebox-caption span').append((index + 1) + " of " + $elem.length);
 
 				if($elem.eq(index).attr('title')){
-					$('#swipebox-caption').append(" - " + $elem.eq(index).attr('title'));
+					$('#swipebox-caption span').append(" - " + $elem.eq(index).attr('title'));
 				}
 			},
 
