@@ -396,9 +396,11 @@ add follows functions.
 
 			setTitle : function(index, isFirst){
 				$('#swipebox-caption').empty();
+				// add current of all caption
+				$('#swipebox-caption').append((index + 1) + " of " + $elem.length);
 
 				if($elem.eq(index).attr('title')){
-					$('#swipebox-caption').append($elem.eq(index).attr('title'));
+					$('#swipebox-caption').append(" - " + $elem.eq(index).attr('title'));
 				}
 			},
 

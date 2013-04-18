@@ -35,6 +35,7 @@
 			<input type="hidden" id="album">
 			<input type="hidden" id="name">
 			<input type="hidden" id="id" >
+			<span id="current"></span>
 			<fieldset><legend>プリント対象</legend>
 			@for(l <- label) {
 				<input type="checkbox" id="label_@l.id" name="@l.id"><label for="label_@l.id">@l.name</label><br>

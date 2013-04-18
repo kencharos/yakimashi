@@ -3,17 +3,20 @@ $(document).ready(function(){
 	var swipeboxParam = {
 		rightBar : true,
 		rightBarInitial : function(slide){
-			initialModal($("img", slide).attr("src"))
+			initialDetail($("img", slide).attr("src"))
 		},
 		rightBarUpdate : function(){
-			updateModal()
+			updateDetail()
 		},
 		rightBarHtmlId : "inline_content"
 	}
-
+	// ui refresh
 	var updateTile = function() {
 		var zero = $("#zero").is(":checked");
 		var noDisp = $("#nodisp_check").is(":checked");
+
+
+		$("div.tile .swipebox").unbind('click');
 		var print =0;
 		$("div.tile").each(function(){
 			$("a",$(this)).removeClass("swipebox")
@@ -28,8 +31,11 @@ $(document).ready(function(){
 			}
 		})
 		$("#print").text(print);
+
+		$("div.tile .swipebox").swipebox(swipeboxParam);
 	}
 
+	// event handling
 	$("#zero").click(updateTile)
 	$("#nodisp_check").click(updateTile)
 
@@ -51,7 +57,8 @@ $(document).ready(function(){
 		alert(c)
 	})
 
-	var initialModal = function(img) {
+	// ajax functions
+	var initialDetail = function(img) {
 		var path = img.split("/")
 		$.get("/photo",
     		{"album": path[path.length - 2], "name":path[path.length - 1]}
@@ -79,7 +86,7 @@ $(document).ready(function(){
 		);
 	}
 
-	var updateModal = function() {
+	var updateDetail = function() {
 		var array = new Array()
 		$("#inline_content input[type='checkbox']").each(function(){
 			if (this.id.indexOf("label_") == 0 && this.checked) {
@@ -109,10 +116,11 @@ $(document).ready(function(){
 				} else {
 					tile.removeClass("nodisp")
 				}
+				$("a",tile).attr("title", json.comment);
+				$("a.img",tile).attr("alt", json.comment);
 				updateTile()
 		})
 	}
 
 	updateTile();
-		$("div.tile .swipebox").swipebox(swipeboxParam);
 });

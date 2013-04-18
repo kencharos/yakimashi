@@ -12,7 +12,7 @@
 		</div>
    @for(photo <- photos) {
    		<div class="tile">
-   			<a href="@routes.Assets.at(photo.url)" class="swipebox">
+   			<a href="@routes.Assets.at(photo.url)" class="swipebox" title="@photo.comment">
 	   			<img src="@routes.Assets.at(photo.url)" alt="@photo.comment">
 	   		</a>
    		</div>
