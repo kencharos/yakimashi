@@ -261,7 +261,7 @@ add follows functions.
 				}else{
 					$('#swipebox-caption').animate({ top : '-50px' }, 500);
 					$('#swipebox-action').animate({ bottom : '-50px' }, 500);
-					if(this.useRight()) $('#swipebox-right').animate({ bottom : '-40%' }, 500);
+					if(this.useRight()) $('#swipebox-right').animate({ bottom : '-45%' }, 500);
 					setTimeout(function(){
 						b.removeClass('visible-bars');
 					}, 1000);

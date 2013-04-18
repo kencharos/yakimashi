@@ -48,14 +48,30 @@ body {
 	bottom:0;
 	right:0;
 	z-index :99999;
-	div div {
-		float:left;
-		
+	fieldset {
+		margin: 0;
+		padding: 3px;
+	}
+	div {
+
+		padding: 0;
+		margin-bottom: 9px;
+		div {
+			padding: 0;
+			margin-right: 0;
+			margin-top: 0;
+			margin-left: 6px;
+			margin-bottom: 8px;
+			float:left;
+		}
 	}
 	div:after{
 		content: "";
 		clear: both;
 		display:block;
+	}
+	select {
+		margin-right: 8px;
 	}
 	textarea{
 		color:black!important;

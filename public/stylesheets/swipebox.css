@@ -68,8 +68,8 @@
   position: absolute;
   z-index: 9999!important;
   bottom: 50px;
-  height: 75%;
-  width: 30%;
+  height: 70%;
+  width: 45%;
 }
 
 #swipebox-action {
@@ -96,7 +96,7 @@
 }
 
 #swipebox-right {
-  right: -30%;
+  right: -45%;
   text-align: left;
 }
 #swipebox-right.visible-bars {
@@ -227,6 +227,10 @@
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
   opacity: 0.75;
 }
+#swipebox-right {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=65)!important;
+  opacity: 0.65!important;
+}
 
 #swipebox-action {
   -webkit-box-shadow: 0 -1px -1px 1px #212121, inset 0 -1px -1px 1px black;
@@ -242,7 +246,7 @@
 }
 #swipebox-right{
   color: white!important;
-  font-size: 12px!important;
+  font-size: 13px!important;
   font-family Helvetica, Arial, sans-serif;
 }
 
