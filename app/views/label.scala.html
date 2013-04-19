@@ -1,19 +1,17 @@
 @(labelForm: Form[Seq[models.Label]])(implicit session:Session)
 @import helper._
+@import helper.twitterBootstrap._
 
 @main("ラベル編集") {
 	@helper.form(action = routes.LabelEdit.update) {
-		<ul>
+		
 		@repeat(labelForm("labels")) { label =>
-           <li>
            @inputText(
                 label("name"),
                 '_label -> label("id").value
             )
             <input type="hidden" name="@label("id").name" value="@label("id").value">
-           </li>
 		}
 		<input type="submit" value="登録" />
-		</ul>
 	}
 }

@@ -5,8 +5,7 @@
 <html>
     <head>
         <title>@title</title>
-        <meta name="viewport" content="width=device-width,initial-scale=0.6,minimum-scale=0.6,maximum-scale=1.0,user-scalable=no">
-
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1.0,user-scalable=no">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/swipebox.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
@@ -15,17 +14,27 @@
         <script src="@routes.Assets.at("javascripts/jquery.swipebox.js")" type="text/javascript"></script>
     </head>
     <body>
+        <div id="wrap">
+            <header>
     		<h1>yakimashi</h1>
             @session.get(Security.username) match {
                 case Some(name) => {
                     welcome @name !
-                    <a href="/label">ラベル編集</a>
-                    <a href="/albums">アルバム一覧</a>
-                    <a href="/logout">ログアウト</a>
+                    <ul class="menu">
+                        <li><a href="/label">ラベル編集</a></li>
+                        <li><a href="/albums">アルバム一覧</a></li>
+                        <li><a href="/logout">ログアウト</a></li>
+                    </ul>
                 }
                 case None => {}
             }
-    		<hr>
-        @content
+    		</header>
+            <div id="content">
+            @content
+            </div>
+            <footer>
+                <a href="https://github.com/kencharos/yakimashi">view source code</a>(author's github)
+            </footer>
+        </div>
     </body>
 </html>

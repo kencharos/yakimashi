@@ -2,7 +2,7 @@
 
 @main("albums") {
    <p>アルバムを選択</p>
-   <ul>
+   <ul class="album">
    @for(name <- albums) {
    		<li><a href="/albums/@name">@name</a></li>
    }

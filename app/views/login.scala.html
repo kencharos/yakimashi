@@ -1,8 +1,10 @@
 @(userForm: Form[(String, String)])(implicit request: Request[_])
 @import helper._
+@import helper.twitterBootstrap._
 
 @main("ログイン") {
-	@helper.form(action = routes.Auth.authenticate) {
+  
+ 	@helper.form(action = routes.Auth.authenticate) {
 	<h2>ログイン</h2>
     <p>sample user is "test"(password is "test").</p>
         @userForm.globalError.map { error =>
