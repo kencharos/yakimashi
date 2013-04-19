@@ -57,11 +57,6 @@
   vertical-align: middle;
 }
 
-.zoom {
-  max-width: 130%;
-  max-height: 130%;
-}
-
 #swipebox-action, #swipebox-caption {
   position: absolute;
   left: 0;

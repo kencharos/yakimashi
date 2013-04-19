@@ -206,15 +206,16 @@ add follows functions.
 	       						$this.getNext();
 
 	       					}else{
-	       					// tap				
-		       				if(!b.hasClass('visible-bars')){
-								$this.showBars();
-								//$this.setTimeout();
-							}else{
-								//$this.clearTimeout();
-								$this.hideBars();
-							}
-		       			}
+		       					// tap
+		       					$this.toggleImage(endCoords.pageX, endCoords.pageY)		
+			       				if(!b.hasClass('visible-bars')){
+									$this.showBars();
+									//$this.setTimeout();
+								}else{
+									//$this.clearTimeout();
+									$this.hideBars();
+								}
+			       			}
 
 	       				$('.touching').off('touchmove').removeClass('touching');
 
@@ -281,6 +282,7 @@ add follows functions.
 					} else {
 						$this.hideBars();
 					}
+					$this.toggleImage(e.pageX, e.pageY);
 				});
 
 				$('#swipebox-action').hover(function() {
@@ -351,6 +353,7 @@ add follows functions.
 
 				$('#swipebox-slider .slide').removeClass('current');
 				$('#swipebox-slider .slide').eq(index).addClass('current');
+
 				this.setTitle(index);
 				if (this.useRight()) {
 					this.rightBarInitial($elem.eq(index));
@@ -451,6 +454,28 @@ add follows functions.
 				}
 			},
 
+			toggleImage : function (px, py){
+				var $this = this;
+				var img = $('#swipebox-slider .slide.current img');
+				var imgDom = img.get(0);
+				var onImage = imgDom.x <= px && px <= (imgDom.x + imgDom.width)
+						&& imgDom.y <= py && py <= (imgDom.y + imgDom.height)
+				if (!onImage) {
+					return;
+				}
+
+				if (img.hasClass("zoom")) {
+					img.removeClass("zoom")
+					imgDom.style.width = null
+					return
+				}
+				var box = img.parent().get(0);
+				if (imgDom.width < box.clientWidth && imgDom.height < box.clientHeight) {
+					img.addClass("zoom");
+					imgDom.style.width = (imgDom.width * 1.15) +"px";
+				}
+
+			},
 
 			closeSlide : function (){
 				var $this = this;
