@@ -4,7 +4,7 @@
 
 @main("ラベル編集") {
 	@helper.form(action = routes.LabelEdit.update) {
-		
+
 		@repeat(labelForm("labels")) { label =>
            @inputText(
                 label("name"),

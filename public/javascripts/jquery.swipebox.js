@@ -180,19 +180,19 @@ add follows functions.
 
 						$(this).addClass('touching');
 
-		  				endCoords = e.originalEvent.targetTouches[0];
-		    				startCoords.pageX = e.originalEvent.targetTouches[0].pageX;
+						endCoords = e.originalEvent.targetTouches[0];
+						startCoords.pageX = e.originalEvent.targetTouches[0].pageX;
 
 						$('.touching').bind('touchmove',function(e){
 							e.preventDefault();
 							e.stopPropagation();
-		    					endCoords = e.originalEvent.targetTouches[0];
+							endCoords = e.originalEvent.targetTouches[0];
 
 						});
 
-			           			return false;
+						return false;
 
-	           			}).bind('touchend',function(e){
+				}).bind('touchend',function(e){
 
 	           				e.preventDefault();
 							e.stopPropagation();
@@ -207,8 +207,8 @@ add follows functions.
 
 	       					}else{
 		       					// tap
-		       					$this.toggleImage(endCoords.pageX, endCoords.pageY)		
-			       				if(!b.hasClass('visible-bars')){
+								$this.toggleImage(endCoords.pageX, endCoords.pageY)
+								if(!b.hasClass('visible-bars')){
 									$this.showBars();
 									//$this.setTimeout();
 								}else{
@@ -262,7 +262,7 @@ add follows functions.
 				}else{
 					$('#swipebox-caption').animate({ top : '-50px' }, 500);
 					$('#swipebox-action').animate({ bottom : '-50px' }, 500);
-					if(this.useRight()) $('#swipebox-right').animate({ bottom : '-45%' }, 500);
+					if(this.useRight()) $('#swipebox-right').animate({ bottom : '-50%' }, 500);
 					setTimeout(function(){
 						b.removeClass('visible-bars');
 					}, 1000);
@@ -277,12 +277,12 @@ add follows functions.
 				//$this.setTimeout();
 
 				$('#swipebox-slider').click(function(e){
+					$this.toggleImage(e.pageX, e.pageY);
 					if(!b.hasClass('visible-bars')){
 						$this.showBars();
 					} else {
 						$this.hideBars();
 					}
-					$this.toggleImage(e.pageX, e.pageY);
 				});
 
 				$('#swipebox-action').hover(function() {

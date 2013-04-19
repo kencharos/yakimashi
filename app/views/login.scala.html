@@ -3,7 +3,7 @@
 @import helper.twitterBootstrap._
 
 @main("ログイン") {
-  
+
  	@helper.form(action = routes.Auth.authenticate) {
 	<h2>ログイン</h2>
     <p>sample user is "test"(password is "test").</p>
@@ -12,7 +12,7 @@
                   @error.message
               </p>
         }
-            
+
         @request.flash.get("success").map { message =>
              <p class="success">
                      @message
@@ -27,7 +27,7 @@
             '_label -> "パスワード",
             '_type -> "password"
        )
-       
+
 		<input type="submit" value="ログイン" />
 	}
 }(request.session)

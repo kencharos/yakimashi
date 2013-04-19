@@ -68,8 +68,9 @@
   position: absolute;
   z-index: 9999!important;
   bottom: 50px;
-  height: 70%;
-  width: 45%;
+  height: 60%;
+  width: 35%;
+  max-width: 45%;
 }
 
 #swipebox-action {
@@ -96,7 +97,7 @@
 }
 
 #swipebox-right {
-  right: -45%;
+  right: -50%;
   text-align: left;
 }
 #swipebox-right.visible-bars {
