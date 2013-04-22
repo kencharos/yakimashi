@@ -22,11 +22,12 @@
    			<a href="@routes.Assets.at(photo._1.url)" title="@photo._1.comment">
 	   			<img src="@routes.Assets.at(photo._1.url)" alt="@photo._1.comment">
 	   		</a>
-			<span class="count">@photo._1.count</span>
-	   		@photo._2 match {
-	   			case Some(d) =>{<span class="date">@String.format("%tY/%tm/%td", d, d, d)</span>}
-	   			case None => {}
-	   		}
+				<span class="count">@photo._1.count</span>
+				@photo._2 match {
+					case Some(d) =>{<span class="date">@String.format("%tY/%tm/%td", d, d, d)</span>}
+					case None => {}
+				}
+				<span class="label">@photo._1.labels.mkString(",")</span>
    		</div>
    }
    <!-- This contains the hidden content for inline calls -->
@@ -35,7 +36,7 @@
 			<input type="hidden" id="album">
 			<input type="hidden" id="name">
 			<input type="hidden" id="id" >
-			<fieldset><legend>プリント対象</legend>
+			<fieldset><legend>プリント対象 (撮影日:<span id="printDate"></span>)</legend>
 			<div>
 			@for(l <- label) {
 				<div><input type="checkbox" id="label_@l.id" name="@l.id"><label for="label_@l.id">@l.name</label>
@@ -48,7 +49,7 @@
 			<label for="noDisp"><input id="noDisp" type="checkbox" />非表示にする</label>
 			</fieldset>
 			<fieldset><legend>コメント</legend>
-				<textarea rows="3" id="comment"></textarea>
+				<textarea rows="2" id="comment"></textarea>
 			</fieldset>
 		</div>
 	</div>

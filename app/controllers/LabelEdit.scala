@@ -15,7 +15,7 @@ object LabelEdit extends Controller with Secured {
         "name" -> nonEmptyText)(Label.apply)(Label.unapply)))
 
   def info = withAuth{ user => implicit request =>
-    
+
     Ok(views.html.label(labelForm.fill(Label.findSortedAll)))
 
   }
@@ -31,6 +31,5 @@ object LabelEdit extends Controller with Secured {
       	Ok(views.html.label(labelForm.fill(labels)))
       }
     )
-
   }
 }

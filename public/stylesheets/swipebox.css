@@ -66,9 +66,8 @@
 }
 #swipebox-right {
   position: absolute;
-  z-index: 9999!important;
   bottom: 50px;
-  height: 60%;
+  height: 62%;
   width: 35%;
   max-width: 45%;
 }
@@ -124,6 +123,7 @@
 #swipebox-close {
   background-position: 15px 12px;
   right: 40px;
+  z-index: 99999!important;
 }
 
 #swipebox-action #swipebox-prev {

@@ -11,9 +11,10 @@ GET 	/logout						controllers.Auth.logout
 GET     /assets/album/*file         controllers.Application.secureAt(path="/public/album", file)
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET		/albums						controllers.Application.albums
-GET		/albums/:name				controllers.Application.photo(name:String)
-GET		/albums/:name/:label				controllers.Application.sheet(name:String, label:String)
+GET		/albums/:album				controllers.Application.photo(album:String)
+GET		/albums/:album/:label				controllers.Application.sheet(album:String, label:String)
 GET		/photo				controllers.PhotoEdit.info(album:String, name:String)
 POST	/photo				controllers.PhotoEdit.update
+POST	/photo/:album/:label		controllers.PhotoEdit.deleteLabel(album:String, label:String)
 GET		/label						controllers.LabelEdit.info
 POST	/label						controllers.LabelEdit.update

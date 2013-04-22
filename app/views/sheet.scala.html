@@ -1,20 +1,32 @@
-@(name:String, photos:Seq[models.Photo], labal:models.Label, labels:Seq[models.Label])(implicit session:Session)
+@(album:String, photos:Seq[models.Photo], label:models.Label, labels:Seq[models.Label])(implicit request: Request[_])
 @import helper._
 
-@main(name) {
+@main(album) {
 		<script src="@routes.Assets.at("javascripts/sheet.js")" type="text/javascript"></script>
-		<div>@name:"@labal.name"に送る写真 &nbsp;
-		&nbsp;
-			<filedset>
-				<select id="sheet">@for(l <- labels){<option value="@l.id">@l.name</option>}</select>&gt;
-				<input id="sheetbutton" type="button" value="選択した人の写真を見る">
-			</filedset>
+		@request.flash.get("error").map { message =>
+				<p class="error">@message</p>
+		}
+		<p style="border-bottom: 1px solid">選択した人の写真を見る<br>
+			@for(l <- labels){
+				<input type="radio" name="target" value="@l.id" id="label_@l.id" @if(l.id==label.id){checked}>
+				<label for="label_@l.id">@l.name</label>&nbsp;
+			}
+		</p>
+		<div>@album:"@label.name"に送る写真 &nbsp;<span>@photos.length枚</span>
 		</div>
-   @for(photo <- photos) {
-   		<div class="tile">
-   			<a href="@routes.Assets.at(photo.url)" class="swipebox" title="@photo.comment">
-	   			<img src="@routes.Assets.at(photo.url)" alt="@photo.comment">
-	   		</a>
-   		</div>
-   }
-}
+		@for(photo <- photos) {
+			<div class="tile">
+				<a href="@routes.Assets.at(photo.url)" class="swipebox" title="@photo.comment">
+					<img src="@routes.Assets.at(photo.url)" alt="@photo.comment">
+				</a>
+			</div>
+		}
+	<div style='display:none'>
+		<div id='inline'>
+			@helper.form(action = routes.PhotoEdit.deleteLabel(album, label.id)) {
+				<input type="hidden" id="name" name="name">
+				<input type="submit" value="プリント対象から外す"/>
+			}
+		</div>
+	</div>
+}(request.session)
