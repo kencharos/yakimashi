@@ -44,16 +44,30 @@ $(document).ready(function(){
 	})
 	$("#command").click(function() {
 		var c = "export SRC=\nexport DIST=\n\n"
+		var res = new Array();
 		$("div.tile").each(function(){
 			if (!$(this).hasClass("nodisp")) {
 				var size = parseInt($("span.count", $(this)).text())
 				var name = $("img", $(this)).attr("src").split("/").reverse()[0];
-				console.log(size +":"+$("img", $(this)).attr("src"))
-				for (var i = 0; i < size; i++) {
-					c = c + "cp $SRC/" + name +" $DIST/" + name.split(".")[0] +"_" + i +"." + name.split(".")[1] + "\n"
+				var label = [];
+				var labeltext = $("span.label", $(this)).text();
+				if (labeltext != "") {
+					label = $("span.label", $(this)).text().split(",")
+				}
+
+				for (var l in label) {
+					res.push("cp $SRC/" + name +" $DIST/" + label[l] + "_"+name);
+				}
+				for (var i = 0; i < size-label.length; i++) {
+					res.push("cp $SRC/" + name +" $DIST/" + "Z_etc" + i +"_"  +name);
 				}
 			}
 		})
+
+		for (var i in res) {
+			c += res[i] + "\n"
+		}
+
 		alert(c)
 	})
 
@@ -61,8 +75,8 @@ $(document).ready(function(){
 	var initialDetail = function(img) {
 		var path = img.split("/")
 		$.get("/photo",
-    		{"album": path[path.length - 2], "name":path[path.length - 1]}
-    	).then(
+				{"album": path[path.length - 2], "name":path[path.length - 1]}
+		).then(
 			function(data){
 
 				$("#inline_content :checkbox").removeAttr("checked")
@@ -82,6 +96,10 @@ $(document).ready(function(){
 				$("#comment").val(data.comment)
 				$("#album").val(data.album)
 				$("#etc").val(data.etc)
+
+				$("#printDate").text("");
+				var tile = $("div .tile a[href='" + img +"']").parent();
+				$("#printDate").text($("span.date", tile).text());
 			}
 		);
 	}
@@ -118,6 +136,9 @@ $(document).ready(function(){
 				}
 				$("a",tile).attr("title", json.comment);
 				$("a.img",tile).attr("alt", json.comment);
+
+
+				$("span.label",tile).text(array.join(","));
 				updateTile()
 		})
 	}

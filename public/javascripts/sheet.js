@@ -1,11 +1,17 @@
 $(document).ready(function(){
-	$(".swipebox").swipebox();
+	$(".swipebox").swipebox({
+		rightBar : true,
+		rightBarInitial : function(slide){
+			var path = $("img", slide).attr("src").split("/");
+			$("#name").val(path[path.length-1])
+		},
+		rightBarHtmlId : "inline"
+	});
 
-	var index = location.pathname.lastIndexOf("/");
-	$("#sheetbutton").click(function(){
+	$("input[name='target']").click(function(){
+
+		var index = location.pathname.lastIndexOf("/");
 		location.href= location.pathname.substring(0, index)
-			+ "/" +$("#sheet").val()
+			+ "/" +this.value
 	})
-	var target = location.pathname.substring(index+1)
-	$("#sheet").val(target)
 });
