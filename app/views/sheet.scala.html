@@ -15,11 +15,11 @@
 		<div>@album:"@label.name"に送る写真 &nbsp;<span>@photos.length枚</span>
 		</div>
 		@for(photo <- photos) {
-			<div class="tile">
+			<div class="tile"><div>
 				<a href="@routes.Assets.at(photo.url)" class="swipebox" title="@photo.comment">
 					<img src="@routes.Assets.at(photo.url)" alt="@photo.comment">
 				</a>
-			</div>
+			</div></div>
 		}
 	<div style='display:none'>
 		<div id='inline'>

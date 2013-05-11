@@ -127,7 +127,7 @@ $(document).ready(function(){
 			contentType:"application/json; charset=utf-8"
 		}).done(function(imgUrl) {
 				var cnt = json.labels.length + json.etc
-				var tile = $("div.tile img[src$='" + imgUrl + "']").parent().parent();
+				var tile = $("div.tile img[src$='" + imgUrl + "']").parent().parent().parent();
 				$("span.count", tile).text(cnt + "")
 				if (json.noDisp) {
 					tile.addClass("nodisp")

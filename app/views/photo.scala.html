@@ -19,6 +19,7 @@
 		</div>
    @for(photo <- photos) {
    		<div class="tile @noDisp(photo._1.noDisp)">
+   			<div>
    			<a href="@routes.Assets.at(photo._1.url)" title="@photo._1.comment">
 	   			<img src="@routes.Assets.at(photo._1.url)" alt="@photo._1.comment">
 	   		</a>
@@ -28,6 +29,7 @@
 					case None => {}
 				}
 				<span class="label">@photo._1.labels.mkString(",")</span>
+				</div>
    		</div>
    }
    <!-- This contains the hidden content for inline calls -->
