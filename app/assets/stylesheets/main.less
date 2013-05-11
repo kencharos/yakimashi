@@ -126,46 +126,61 @@ form　{
 		font-weight: bold;
 	}
 }
-.tile {
+div.tile {
 	width: @size;
 	height: @size;
 	position: relative;
 	float:left;
 	margin-left: 4px;
 	margin-top: 4px;
-
-	img {
+	margin-right:0;
+	margin-bottom:0;
+	padding: 0;
+	div {
+		position: absolute;
+		margin:0;
+		padding:0;
 		border:0;
-		max-width: @size;
-		max-height: @size;
-	}
-
-	span.count {
-		font-size: 10pt;
-		color: white;
-		background-color: black;
-		text-align: center;
-		vertical-align: middle;
-		position: absolute; top:0; right:0;
-		width: 20px;
-		height: 18px;
-		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
-		opacity: 0.70;
-	}
-	span.date {
-		font-size: 10pt;
-		color: white;
-		background-color: black;
-		text-align: right;
-		vertical-align: middle;
-		position: absolute; bottom:30px; right:0;
-		width: 89px;
-		height: 18px;
-		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
-		opacity: 0.70;
-	}
-	span.label {
-		display: none;
+		top:0;
+		left: 0;
+		a {
+			img {
+				margin:0;
+				padding:0;
+				border:0;
+				max-width: @size;
+				max-height: @size;
+			}
+		}
+		span.count {
+			border:0;
+			font-size: 10pt;
+			color: white;
+			background-color: black;
+			text-align: center;
+			vertical-align: middle;
+			position: absolute; top:0; left:0;
+			width: 20px;
+			height: 18px;
+			filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+			opacity: 0.70;
+		}
+		span.date {
+			border:0;
+			font-size: 9pt;
+			color: white;
+			background-color: black;
+			text-align: right;
+			vertical-align: middle;
+			position: absolute; bottom:0; right:0;
+			height: 18px;
+			filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+			opacity: 0.70;
+		}
+		span.label {
+			border:0;
+			display: none;
+		}
 	}
 }
 #inline_content {
@@ -211,8 +226,7 @@ form　{
 	background-color: black;
 	text-align: center;
 	vertical-align: middle;
-	position: absolute; top:20px; right:0;
-	width: 55px;
+	position: absolute; top:0; right:0;
 	height: 20px;
 		filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
 		opacity: 0.80;
@@ -222,13 +236,15 @@ form　{
 	body,input {
 		font-size: 10px;
 	}
-	.tile {
-		width: @iphoneSize;
-		height: @iphoneSize;
+	div.tile {
+		width: @iphoneSize!important;
+		height: @iphoneSize!important;
 
-		img {
-			max-width: @iphoneSize;
-			max-height: @iphoneSize;
+		a {
+			img {
+				max-width: @iphoneSize!important;
+				max-height: @iphoneSize!important;
+			}
 		}
 	}
 	#inline_content {
