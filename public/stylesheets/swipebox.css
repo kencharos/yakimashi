@@ -12,7 +12,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9998!important;
+  z-index: 4998!important;
   overflow: hidden;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -57,7 +57,55 @@
   vertical-align: middle;
 }
 
-#swipebox-action, #swipebox-caption {
+#swipebox-action{
+  position: absolute;
+  left: 0;
+  z-index: 999;
+  height: 150px;
+  width: 100%;
+}
+#swipebox-thumbnail{
+  width: 85%;
+  z-index:9999!important;
+  height: 100%;
+  overflow: scroll;
+  background-color: white;
+  opacity: 1.0!important;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  margin: 0;
+  padding: 0;
+}
+#swipebox-thumbnail ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#swipebox-thumbnail ul li {
+  width: 145px;
+  height: 145px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 0;
+  display: list-item;
+  float: left;
+}
+
+#swipebox-thumbnail ul li.current{
+  border:solid 1px #00ff00;
+  background-color: #00ff00;
+}
+
+#swipebox-thumbnail ul li img {
+  margin: 0;
+  padding: 0;
+  max-width: 145px;
+  max-height: 145px;
+}
+
+#swipebox-caption {
   position: absolute;
   left: 0;
   z-index: 999;
@@ -66,14 +114,14 @@
 }
 #swipebox-right {
   position: absolute;
-  bottom: 50px;
-  height: 62%;
+  bottom: 150px;
+  height: 60%;
   width: 35%;
   max-width: 45%;
 }
 
 #swipebox-action {
-  bottom: -50px;
+  bottom: -150px;
 }
 #swipebox-action.visible-bars {
   bottom: 0;
@@ -225,8 +273,8 @@
   -webkit-box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
   -moz-box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
   box-shadow: 0 1px 1px 1px #212121, inset 0 1px 1px 1px black;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
-  opacity: 0.75;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.80;
 }
 #swipebox-right {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=65)!important;

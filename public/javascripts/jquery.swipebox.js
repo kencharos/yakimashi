@@ -38,6 +38,7 @@ add follows functions.
 					</div>\
 					<div id="swipebox-right"></div>\
 					<div id="swipebox-action">\
+						<div id="swipebox-thumbnail"><ul></ul></div>\
 						<a id="swipebox-prev"></a>\
 						<a id="swipebox-next"></a>\
 					</div>\
@@ -115,7 +116,31 @@ add follows functions.
 
 				$elem.each(function(){
 					$('#swipebox-slider').append('<div class="slide"></div>');
+					// set tumbnail
+					$('#swipebox-thumbnail ul').append('<li><img src="' + $(this).attr('href') +'"></img></li>');
 				});
+				// add move slide to clicked image
+				$('#swipebox-thumbnail ul li').click(function() {
+						var cur = 0;
+						$('#swipebox-thumbnail ul li').each(function() {
+							if ($(this).hasClass("current")) {
+								cur = $(this).index()
+							}
+						})
+						var diff = $(this).index() - cur
+						if (diff > 0) {
+							for (var i = 0; i < diff; i++) {
+								$this.getNext();
+							}
+						} else if (diff < 0) {
+							for (var i = 0; i < -diff; i++) {
+								$this.getPrev();
+							}
+						}
+					}
+				)
+				// set tumbnail withd
+				$('#swipebox-thumbnail ul').width((elem.length * 155) + "px")
 
 				$this.setDim();
 				$this.actions();
@@ -171,12 +196,12 @@ add follows functions.
 					swipMinDistance = 10,
 					startCoords = {},
 					endCoords = {};
-					var b = $('#swipebox-caption, #swipebox-action' + (this.useRight() ? ', #swipebox-right' : ''));
+					var b = $('#swipebox-caption' + (this.useRight() ? ', #swipebox-right' : ''));
 
 					//b.addClass('visible-bars');
 					//$this.setTimeout();
 
-					$('#swipebox-slider,#swipebox-action,#swipebox-caption').bind('touchstart', function(e){
+					$('#swipebox-slider,#swipebox-caption').bind('touchstart', function(e){
 
 						$(this).addClass('touching');
 
@@ -354,6 +379,18 @@ add follows functions.
 				$('#swipebox-slider .slide').removeClass('current');
 				$('#swipebox-slider .slide').eq(index).addClass('current');
 
+				// set tumbnail
+				$('#swipebox-thumbnail ul li').removeClass('current');
+				var thum = $('#swipebox-thumbnail ul li').eq(index)
+				thum.addClass('current');
+				var area = $('#swipebox-thumbnail')
+				var offset = thum.offset().left;
+				if (offset < 0) {
+					area.animate({scrollLeft:area.scrollLeft() - offset - 154*2},'normal')
+				} else if ((offset + 154) > area.width()) {
+					area.animate({scrollLeft:area.scrollLeft() + offset + 154*2},'normal')
+				}
+
 				this.setTitle(index);
 				if (this.useRight()) {
 					this.rightBarInitial($elem.eq(index));
@@ -419,6 +456,7 @@ add follows functions.
 				index = $('#swipebox-slider .slide').index($('#swipebox-slider .slide.current'));
 				if(index+1 < $elem.length){
 					if (this.useRight) {
+						console.log("upd")
 						this.rightBarUpdate()
 					}
 					index++;
