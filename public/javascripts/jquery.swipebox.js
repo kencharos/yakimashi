@@ -386,9 +386,11 @@ add follows functions.
 				var area = $('#swipebox-thumbnail')
 				var offset = thum.offset().left;
 				if (offset < 0) {
-					area.animate({scrollLeft:area.scrollLeft() - 170},'normal')
+					area.animate({scrollLeft:area.scrollLeft() +offset - 80},'normal')
 				} else if ((offset + 154) > area.width()) {
-					area.animate({scrollLeft:area.scrollLeft() + 170},'normal')
+					var diff = (offset + 154) - area.width();
+					area.animate({scrollLeft:area.scrollLeft() + diff + 80},'normal')
+
 				}
 
 				this.setTitle(index);
