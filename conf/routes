@@ -12,6 +12,7 @@ GET     /assets/album/*file         controllers.Application.secureAt(path="/publ
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET		/albums						controllers.Application.albums
 GET		/albums/:album				controllers.Application.photo(album:String)
+GET		/albums/:album/print				controllers.Application.print(album:String)
 GET		/albums/:album/:label				controllers.Application.sheet(album:String, label:String)
 GET		/photo				controllers.PhotoEdit.info(album:String, name:String)
 POST	/photo				controllers.PhotoEdit.update

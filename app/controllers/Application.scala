@@ -8,20 +8,21 @@ import com.drew.imaging._;
 import com.drew.metadata.exif.ExifSubIFDDirectory
 
 object Application extends Controller with Secured {
-  
+
   def secureAt(path:String, file:String) = withAuth{user =>
     Assets.at(path, file).apply
   }
-  
-  def albums = withAuth { user => implicit request => 
+
+  def albums = withAuth { user => implicit request =>
   	val files = new File("public/album").listFiles();
 
   	Ok(views.html.albums(files.filter(_ isDirectory).map(_ getName).sorted));
 
   }
 
-  def photo(album:String) = withAuth { user => implicit request => 
-  	var images = new File("public/album", album).listFiles().filter(_ isFile).sortBy(_ getName)
+  def getImages(album:String) = new File("public/album", album).listFiles().filter(_ isFile).sortBy(_ getName)
+  def photo(album:String) = withAuth { user => implicit request =>
+  	var images = getImages(album)
 
   	def exifTime(f:File) = {
   	  try {
@@ -37,7 +38,6 @@ object Application extends Controller with Secured {
   	    case e => None
   	  }
   	}
-
   	val photos = images.map(f =>
   	    Photo.findOneByName(album, f.getName) match {
   	      case None => (Photo(album = album, name = f.getName), exifTime(f))
@@ -47,6 +47,15 @@ object Application extends Controller with Secured {
 	  Ok(views.html.photo(album, photos, Label.findSortedAll))
   }
 
+  def print(album:String) = withAuth { user => implicit request =>
+    val photo = getImages(album).map{ f =>
+        Photo.findOneByName(album, f.getName) match {
+          case None => Photo(album = album, name = f.getName)
+          case Some(p)=> p
+        }
+    }.filterNot(_.noDisp)
+    Ok(views.html.print(album, photo, Label.findSortedAll))
+  }
   def sheet(album:String, label:String) = withAuth{ user => implicit request =>
     Ok(views.html.sheet(album, Photo.findByLabel(album, label), Label.findOneById(label).get, Label.findSortedAll))
 
