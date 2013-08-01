@@ -5,12 +5,12 @@
 		<div>@name	@photos.size 枚&nbsp;
 		</div>
    @for(photo <- photos.zipWithIndex) {
-			<div style="height:126px;width:100px;display:inline-block;padding:0">
+			<div style="height:126px;width:100px;display:inline-block;padding:0;line-height:10pt;">
 				<img src="@routes.Assets.at(photo._1.url)" alt="@photo._1.comment" style="max-width:100px;max-height:100px;">
 				<br>
-				<span style="font-size:8pt;overflow:hidden">(@(photo._2 + 1)) @photo._1.name</span>
+				<span style="font-size:8pt">(@(photo._2 + 1)) @photo._1.name</span>
 				<br>
-				<span style="font-size:8pt;letter-spacing: 0.1em;">
+				<span style="font-size:8pt;letter-spacing: 0.1pt;">
 				@for(l <- label) {
 					@if(photo._1.labels.contains(l.id)) {
 						<span style="font-weight:bold">@l.id</span>
